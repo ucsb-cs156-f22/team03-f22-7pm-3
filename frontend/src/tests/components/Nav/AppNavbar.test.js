@@ -258,6 +258,7 @@ describe("AppNavbar tests", () => {
         expect(aElement).toBeInTheDocument();
         aElement?.click();
         await waitFor( () => expect(getByTestId(/appnavbar-helprequests-list/)).toBeInTheDocument() );
+        await waitFor( () => expect(getByTestId(/appnavbar-helprequests-create/)).toBeInTheDocument() );
 
     });
    
