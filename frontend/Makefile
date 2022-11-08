@@ -18,7 +18,7 @@ test:	# Run unit tests.
 
 .PHONY: test-mut
 test-mut:	# Run mutation tests.
-	npx stryker run
+	nm 
 
 .PHONY: mut
 mut: test-mut	# Alias for `test-mut`.
