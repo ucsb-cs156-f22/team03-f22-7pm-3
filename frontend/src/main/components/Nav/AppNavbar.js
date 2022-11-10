@@ -97,6 +97,7 @@ export default function AppNavbar({ currentUser, systemInfo, doLogout, currentUr
                       )
                     }
                   </NavDropdown>
+                  )
                }
                {
                 hasRole(currentUser, "ROLE_USER") && (
