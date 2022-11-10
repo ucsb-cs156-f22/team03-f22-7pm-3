@@ -1,12 +1,13 @@
-import { fireEvent, render, waitFor } from "@testing-library/react";
+//import { fireEvent, render, waitFor } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
-import UCSBOrganizationIndexPage from "main/pages/ucsborganization/UCSBOrganizationIndexPage";
+import UCSBOrganizationIndexPage from "main/pages/UCSBorganization/UCSBOrganizationIndexPage";
 
 
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
-import { ucsbOrganizationFixtures } from "fixtures/UCSBOrganizationFixtures";
+//import { ucsbOrganizationFixtures } from "fixtures/UCSBOrganizationFixtures";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 import _mockConsole from "jest-mock-console";
@@ -33,7 +34,7 @@ describe("UCSBOrganizationIndexPage tests", () => {
 
     const axiosMock =new AxiosMockAdapter(axios);
 
-    const testId = "OrganizationTable";
+    //const testId = "OrganizationTable";
 
     const setupUserOnly = () => {
         axiosMock.reset();
