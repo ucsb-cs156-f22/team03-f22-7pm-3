@@ -3,11 +3,9 @@
 self := $(abspath $(lastword ${MAKEFILE_LIST}))
 
 
-.PHONY: help
-help:	# Generate a list of targets.
-	@cat ${self} | grep '^[[:alnum:]_-]*:' | \
-		sed 's/^\([[:alnum:]_-]*\):[[:space:][:alnum:]_-]*/\1\t\t/' | sort
-
+.PHONY: run
+run:	# Run the frontend.
+	npm start
 
 .PHONY: test-all
 test-all: test test-mut	# Run all tests.
@@ -30,3 +28,9 @@ coverage:	# Get test line coverage.
 .PHONY: visualize
 visualize:	# Visualize frontend components in isolation.
 	npm run storybook
+
+.PHONY: help
+help:	# Generate a list of targets.
+	@cat ${self} | grep '^[[:alnum:]_-]*:' | \
+		sed 's/^\([[:alnum:]_-]*\):[[:space:][:alnum:]_-]*/\1\t\t/' | sort
+
