@@ -3,7 +3,7 @@ import React from 'react'
 
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 // import MenuItemReviewsTable from 'main/components/MenuItemReviews/MenuItemReviewsTable';
-import { useCurrentUser } from 'main/utils/currentUser' // use prefix indicates a React Hook
+// import { useCurrentUser } from 'main/utils/currentUser' // use prefix indicates a React Hook
 
 export default function MenuItemReviewsIndexPage() {
 
