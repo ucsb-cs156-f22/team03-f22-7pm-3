@@ -20,6 +20,7 @@ import UCSBDatesEditPage from "main/pages/UCSBDates/UCSBDatesEditPage";
 /* import RecommendationCreatePage from "main/pages/UCSBDates/UCSBDatesCreatePage"; */
 /* import RecommendationEditPage from "main/pages/UCSBDates/UCSBDatesEditPage"; */
 
+import MenuItemReviewsIndexPage from "main/pages/MenuItemReviews/MenuItemReviewsIndexPage";
 
 import { hasRole, useCurrentUser } from "main/utils/currentUser";
 
