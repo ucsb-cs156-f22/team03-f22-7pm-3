@@ -19,7 +19,7 @@ export default function MenuItemReveiwsTable({ menuItemReviews, currentUser }) {
     const navigate = useNavigate();
 
     const editCallback = (cell) => {
-        navigate(`/MenuItemReview/edit/${cell.row.values.code}`)
+        navigate(`/MenuItemReview/edit/${cell.row.values.itemId}`)
     }
 
     // Stryker disable all : hard to test for query caching
@@ -47,7 +47,7 @@ export default function MenuItemReveiwsTable({ menuItemReviews, currentUser }) {
             accessor: 'stars',
         },
         {
-            Header: 'Date',
+            Header: 'DateReviewed',
             accessor: 'dateReviewed',
         },
         {
