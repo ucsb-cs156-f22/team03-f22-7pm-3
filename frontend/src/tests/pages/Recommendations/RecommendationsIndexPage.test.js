@@ -5,11 +5,11 @@ import { MemoryRouter } from "react-router-dom";
 import RecommendationsIndexPage from "main/pages/Recommendations/RecommendationsIndexPage";
 
 
-/* import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures"; */
-/* import { systemInfoFixtures } from "fixtures/systemInfoFixtures"; */
+import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
+import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 /* import { ucsbDatesFixtures } from "fixtures/ucsbDatesFixtures"; */
-/* import axios from "axios"; */
-/* import AxiosMockAdapter from "axios-mock-adapter"; */
+import axios from "axios";
+import AxiosMockAdapter from "axios-mock-adapter";
 /* import mockConsole from "jest-mock-console"; */
 
 
@@ -25,26 +25,26 @@ import RecommendationsIndexPage from "main/pages/Recommendations/Recommendations
 
 describe("RecommendationsIndexPage tests", () => {
 
-    /* const axiosMock =new AxiosMockAdapter(axios); */
-    /**/
+    const axiosMock =new AxiosMockAdapter(axios);
+
     /* const testId = "UCSBDatesTable"; */
     /**/
-    /* const setupUserOnly = () => { */
-    /*     axiosMock.reset(); */
-    /*     axiosMock.resetHistory(); */
-    /*     axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly); */
-    /*     axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither); */
-    /* }; */
-    /**/
-    /* const setupAdminUser = () => { */
-    /*     axiosMock.reset(); */
-    /*     axiosMock.resetHistory(); */
-    /*     axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.adminUser); */
-    /*     axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither); */
-    /* }; */
-    /**/
+    const setupUserOnly = () => {
+        axiosMock.reset();
+        axiosMock.resetHistory();
+        axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
+        axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
+    };
+
+    const setupAdminUser = () => {
+        axiosMock.reset();
+        axiosMock.resetHistory();
+        axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.adminUser);
+        axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
+    };
+
     test("renders without crashing for regular user", () => {
-        /* setupUserOnly(); */
+        setupUserOnly();
         const queryClient = new QueryClient();
         /* axiosMock.onGet("/api/ucsbdates/all").reply(200, []); */
 
@@ -60,7 +60,7 @@ describe("RecommendationsIndexPage tests", () => {
     });
 
     test("renders without crashing for admin user", () => {
-        /* setupAdminUser(); */
+        setupAdminUser();
         const queryClient = new QueryClient();
         /* axiosMock.onGet("/api/ucsbdates/all").reply(200, []); */
 
