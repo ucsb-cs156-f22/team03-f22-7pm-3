@@ -2,7 +2,7 @@
 import { render } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
-import UCSBDatesIndexPage from "main/pages/UCSBDates/UCSBDatesIndexPage";
+import RecommendationsIndexPage from "main/pages/Recommendations/RecommendationsIndexPage";
 
 
 /* import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures"; */
@@ -51,7 +51,7 @@ describe("RecommendationsIndexPage tests", () => {
         render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <UCSBDatesIndexPage />
+                    <RecommendationsIndexPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
@@ -67,7 +67,7 @@ describe("RecommendationsIndexPage tests", () => {
         render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <UCSBDatesIndexPage />
+                    <RecommendationsIndexPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
