@@ -7,7 +7,7 @@ import { useCurrentUser } from 'main/utils/currentUser' // use prefix indicates 
 
 export default function MenuItemReviewsIndexPage() {
 
-  const currentUser = useCurrentUser();
+  // const currentUser = useCurrentUser();
 
   // const { data: reviews, error: _error, status: _status } =
   //   useBackend(
