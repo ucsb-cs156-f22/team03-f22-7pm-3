@@ -82,12 +82,10 @@ describe("UCSBDiningCommonsMenuItem tests", () => {
 
 
     });
-
     test("renders three diningCommonMenuItem without crashing for regular user", async () => {
         setupUserOnly();
         const queryClient = new QueryClient();
         axiosMock.onGet("/api/UCSBDiningCommonsMenuItem/all").reply(200, diningCommonsMenuItemFixtures.threeDiningCommonsMenuItem);
-
         const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
@@ -95,6 +93,7 @@ describe("UCSBDiningCommonsMenuItem tests", () => {
                 </MemoryRouter>
             </QueryClientProvider>
         );
+
 
         await waitFor(  () => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent(1); } );
         expect(getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(2);
@@ -106,7 +105,6 @@ describe("UCSBDiningCommonsMenuItem tests", () => {
         setupAdminUser();
         const queryClient = new QueryClient();
         axiosMock.onGet("/api/UCSBDiningCommonsMenuItem/all").reply(200, diningCommonsMenuItemFixtures.threeDiningCommonsMenuItem);
-
         const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
@@ -114,7 +112,6 @@ describe("UCSBDiningCommonsMenuItem tests", () => {
                 </MemoryRouter>
             </QueryClientProvider>
         );
-
         await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent(1); });
         expect(getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(2);
         expect(getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent(3);
@@ -135,7 +132,6 @@ describe("UCSBDiningCommonsMenuItem tests", () => {
 
         const queryClient = new QueryClient();
         axiosMock.onGet("/api/UCSBDiningCommonsMenuItem/all").timeout();
-
         const { queryByTestId, getByText } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
@@ -145,14 +141,11 @@ describe("UCSBDiningCommonsMenuItem tests", () => {
         );
 
         await waitFor(() => { expect(axiosMock.history.get.length).toBeGreaterThanOrEqual(3); });
-
-        const expectedHeaders = ['ID',  'Dining Commons Code', 'Dish','Station'];
-    
+        const expectedHeaders = ['ID',  'Dining Commons Code', 'Dish','Station'];    
         expectedHeaders.forEach((headerText) => {
           const header = getByText(headerText);
           expect(header).toBeInTheDocument();
         });
-
         expect(queryByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument();
     });
 

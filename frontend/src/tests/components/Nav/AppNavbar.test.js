@@ -355,7 +355,6 @@ describe('AppNavbar tests', () => {
 
     const currentUser = currentUserFixtures.userOnly;
     const systemInfo = systemInfoFixtures.showingBoth;
-
     const doLogin = jest.fn();
 
     const {getByTestId  } = render(
