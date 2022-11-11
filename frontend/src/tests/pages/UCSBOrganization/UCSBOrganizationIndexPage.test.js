@@ -2,7 +2,7 @@
 import { render } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
-import UCSBOrganizationIndexPage from "main/pages/UCSBorganization/UCSBOrganizationIndexPage";
+import UCSBOrganizationIndexPage from "main/pages/UCSBOrganization/UCSBOrganizationIndexPage";
 
 
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
