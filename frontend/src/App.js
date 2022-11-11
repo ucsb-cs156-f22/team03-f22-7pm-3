@@ -1,91 +1,106 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import HomePage from "main/pages/HomePage";
-import ProfilePage from "main/pages/ProfilePage";
-import AdminUsersPage from "main/pages/AdminUsersPage";
+import { Button, Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { hasRole } from "main/utils/currentUser";
+import AppNavbarLocalhost from "main/components/Nav/AppNavbarLocalhost"
 
-import TodosIndexPage from "main/pages/Todos/TodosIndexPage";
-import TodosCreatePage from "main/pages/Todos/TodosCreatePage";
-import TodosEditPage from "main/pages/Todos/TodosEditPage";
-
-import DiningCommonsIndexPage from "main/pages/DiningCommons/DiningCommonsIndexPage";
-import DiningCommonsCreatePage from "main/pages/DiningCommons/DiningCommonsCreatePage";
-import DiningCommonsEditPage from "main/pages/DiningCommons/DiningCommonsEditPage";
-
-
-import UCSBDatesIndexPage from "main/pages/UCSBDates/UCSBDatesIndexPage";
-import UCSBDatesCreatePage from "main/pages/UCSBDates/UCSBDatesCreatePage";
-import UCSBDatesEditPage from "main/pages/UCSBDates/UCSBDatesEditPage";
-
-import HelpRequestsIndexPage from "main/pages/HelpRequests/HelpRequestsIndexPage";
-
-
-import { hasRole, useCurrentUser } from "main/utils/currentUser";
-
-import "bootstrap/dist/css/bootstrap.css";
-
-
-function App() {
-
-  const { data: currentUser } = useCurrentUser();
-
+export default function AppNavbar({ currentUser, systemInfo, doLogout, currentUrl = window.location.href }) {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route exact path="/" element={<HomePage />} />
-        <Route exact path="/profile" element={<ProfilePage />} />
-        {
-          hasRole(currentUser, "ROLE_ADMIN") && <Route exact path="/admin/users" element={<AdminUsersPage />} />
-        }
-        {
-          hasRole(currentUser, "ROLE_USER") && (
-            <>
-              <Route exact path="/todos/list" element={<TodosIndexPage />} />
-              <Route exact path="/todos/create" element={<TodosCreatePage />} />
-              <Route exact path="/todos/edit/:todoId" element={<TodosEditPage />} />
-            </>
-          )
-        }
-        {
-          hasRole(currentUser, "ROLE_USER") && (
-            <>
-              <Route exact path="/diningCommons/list" element={<DiningCommonsIndexPage />} />
-            </>
-          )
-        }
-        {
-          hasRole(currentUser, "ROLE_ADMIN") && (
-            <>
-              <Route exact path="/diningCommons/create" element={<DiningCommonsCreatePage />} />
-              <Route exact path="/diningCommons/edit/:code" element={<DiningCommonsEditPage />} />
-            </>
-          )
-        }
-        {
-          hasRole(currentUser, "ROLE_USER") && (
-            <>
-              <Route exact path="/ucsbdates/list" element={<UCSBDatesIndexPage />} />
-            </>
-          )
-        }
-        {
-          hasRole(currentUser, "ROLE_ADMIN") && (
-            <>
-              <Route exact path="/ucsbdates/create" element={<UCSBDatesCreatePage />} />
-              <Route exact path="/ucsbdates/edit/:id" element={<UCSBDatesEditPage />} />
-            </>
-          )
-        }
-        {
-          hasRole(currentUser, "ROLE_USER") && (
-            <>
-              <Route exact path="/helprequests/list" element={<HelpRequestsIndexPage />} />
-            </>
-          )
-        }
+    <>
+      {
+        (currentUrl.startsWith("http://localhost:3000") || currentUrl.startsWith("http://127.0.0.1:3000")) && (
+          <AppNavbarLocalhost url={currentUrl} />
+        )
+      }
+      <Navbar expand="xl" variant="dark" bg="dark" sticky="top" data-testid="AppNavbar">
+        <Container>
+          <Navbar.Brand as={Link} to="/">
+            Example
+          </Navbar.Brand>
 
-      </Routes>
-    </BrowserRouter>
+          <Navbar.Toggle />
+
+          <>
+            {/* be sure that each NavDropdown has a unique id and data-testid */}
+          </>
+
+          <Navbar.Collapse>
+            {/* This `nav` component contains all navigation items that show up on the left side */}
+            <Nav className="me-auto">
+              {
+                systemInfo?.springH2ConsoleEnabled && (
+                  <>
+                    <Nav.Link href="/h2-console">H2Console</Nav.Link>
+                  </>
+                )
+              }
+              {
+                systemInfo?.showSwaggerUILink && (
+                  <>
+                    <Nav.Link href="/swagger-ui/index.html">Swagger</Nav.Link>
+                  </>
+                )
+              }
+              {
+                hasRole(currentUser, "ROLE_ADMIN") && (
+                  <NavDropdown title="Admin" id="appnavbar-admin-dropdown" data-testid="appnavbar-admin-dropdown" >
+                    <NavDropdown.Item as={Link} to="/admin/users">Users</NavDropdown.Item>
+                  </NavDropdown>
+                )
+              }
+              {
+                hasRole(currentUser, "ROLE_USER") && (
+                  <NavDropdown title="Todos" id="appnavbar-todos-dropdown" data-testid="appnavbar-todos-dropdown" >
+                    <NavDropdown.Item as={Link} to="/todos/list">List Todos</NavDropdown.Item>
+                    <NavDropdown.Item as={Link} to="/todos/create">Create Todo</NavDropdown.Item>
+                  </NavDropdown>
+                )
+              }
+               {
+                hasRole(currentUser, "ROLE_USER") && (
+                  <NavDropdown title="Dining Commons" id="appnavbar-dining-commons-dropdown" data-testid="appnavbar-dining-commons-dropdown" >
+                    <NavDropdown.Item as={Link} to="/diningCommons/list" data-testid="appnavbar-dining-commons-list">List</NavDropdown.Item>
+                    <NavDropdown.Item as={Link} to="/diningCommons/create" data-testid="appnavbar-dining-commons-create">Create</NavDropdown.Item>
+                  </NavDropdown>
+                )
+              }
+              {
+                hasRole(currentUser, "ROLE_USER") && (
+                  <NavDropdown title="UCSBDates" id="appnavbar-ucsbdates-dropdown" data-testid="appnavbar-ucsbdates-dropdown" >
+                    <NavDropdown.Item as={Link} to="/ucsbdates/list" data-testid="appnavbar-ucsbdates-list">List</NavDropdown.Item>
+                    {
+                      hasRole(currentUser, "ROLE_ADMIN") && (
+                        <NavDropdown.Item as={Link} to="/ucsbdates/create" data-testid="appnavbar-ucsbdates-create">Create</NavDropdown.Item>
+                      )
+                    }
+                  </NavDropdown>
+                )
+              }
+              {
+                hasRole(currentUser, "ROLE_USER") && (
+                  <NavDropdown title="HelpRequests" id="appnavbar-helprequests-dropdown" data-testid="appnavbar-helprequests-dropdown" >
+                    <NavDropdown.Item as={Link} to="/helprequests/list" data-testid="appnavbar-helprequests-list">List</NavDropdown.Item>
+                    <NavDropdown.Item as={Link} to="/helprequests/create" data-testid="appnavbar-helprequests-create">Create</NavDropdown.Item>
+                  </NavDropdown>
+                )
+              }
+            </Nav>
+
+            <Nav className="ml-auto">
+              {/* This `nav` component contains all navigation items that show up on the right side */}
+              {
+                currentUser && currentUser.loggedIn ? (
+                  <>
+                    <Navbar.Text className="me-3" as={Link} to="/profile">Welcome, {currentUser.root.user.email}</Navbar.Text>
+                    <Button onClick={doLogout}>Log Out</Button>
+                  </>
+                ) : (
+                  <Button href="/oauth2/authorization/google">Log In</Button>
+                )
+              }
+            </Nav>
+          </Navbar.Collapse>
+        </Container >
+      </Navbar >
+    </>
   );
-}
-
-export default App;
+  }
