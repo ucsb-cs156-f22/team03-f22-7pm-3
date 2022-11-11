@@ -1,5 +1,6 @@
-// import { fireEvent, render, waitFor } from "@testing-library/react";
-import { render } from "@testing-library/react"
+import { fireEvent, render, waitFor } from "@testing-library/react";
+// import { render } from "@testing-library/react"
+//import {render, waitFore} from "@testing-library/react"
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 import DiningCommonsMenuItemIndexPage from "main/pages/DiningCommonsMenuItem/DiningCommonsMenuItemIndexPage";
@@ -7,7 +8,7 @@ import DiningCommonsMenuItemIndexPage from "main/pages/DiningCommonsMenuItem/Din
 
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
-//import { diningCommonsFixtures } from "fixtures/diningCommonsFixtures";
+import { diningCommonsMenuItemFixtures } from "fixtures/diningCommonsMenuItemFixtures";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 import _mockConsole from "jest-mock-console";
@@ -34,7 +35,7 @@ describe("UCSBDiningCommonsMenuItem tests", () => {
 
     const axiosMock =new AxiosMockAdapter(axios);
 
-    //const testId = "DiningCommonsMenuItemTable";
+    const testId = "DiningCommonsMenuItemTable";
 
     const setupUserOnly = () => {
         axiosMock.reset();
@@ -81,42 +82,51 @@ describe("UCSBDiningCommonsMenuItem tests", () => {
 
 
     });
-/*
-    test("renders three diningCommon without crashing for regular user", async () => {
+
+    test("renders three diningCommonMenuItem without crashing for regular user", async () => {
         setupUserOnly();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/ucsbdiningcommons/all").reply(200, diningCommonsFixtures.threeCommons);
+        axiosMock.onGet("/api/UCSBDiningCommonsMenuItem/all").reply(200, diningCommonsMenuItemFixtures.threeDiningCommonsMenuItem);
 
         const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <DiningCommonsIndexPage />
+                    <DiningCommonsMenuItemIndexPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
 
-        await waitFor(  () => { expect(getByTestId(`${testId}-cell-row-0-col-code`)).toHaveTextContent("de-la-guerra"); } );
-        expect(getByTestId(`${testId}-cell-row-1-col-code`)).toHaveTextContent("ortega");
-        expect(getByTestId(`${testId}-cell-row-2-col-code`)).toHaveTextContent("portola");
+        await waitFor(  () => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent(1); } );
+        expect(getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(2);
+        expect(getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent(3);
 
     });
 
-    test("renders three diningCommons without crashing for admin user", async () => {
+    test("renders three diningCommonsMenuItem without crashing for admin user", async () => {
         setupAdminUser();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/ucsbdiningcommons/all").reply(200, diningCommonsFixtures.threeCommons);
+        axiosMock.onGet("/api/UCSBDiningCommonsMenuItem/all").reply(200, diningCommonsMenuItemFixtures.threeDiningCommonsMenuItem);
 
         const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <DiningCommonsIndexPage />
+                    <DiningCommonsMenuItemIndexPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
 
-        await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-code`)).toHaveTextContent("de-la-guerra"); });
-        expect(getByTestId(`${testId}-cell-row-1-col-code`)).toHaveTextContent("ortega");
-        expect(getByTestId(`${testId}-cell-row-2-col-code`)).toHaveTextContent("portola");
+        await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent(1); });
+        expect(getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(2);
+        expect(getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent(3);
+        expect(getByTestId(`${testId}-cell-row-0-col-diningCommonsCode`)).toHaveTextContent("ortega");
+        expect(getByTestId(`${testId}-cell-row-1-col-diningCommonsCode`)).toHaveTextContent("ortega");
+        expect(getByTestId(`${testId}-cell-row-2-col-diningCommonsCode`)).toHaveTextContent("portola");
+        expect(getByTestId(`${testId}-cell-row-0-col-name`)).toHaveTextContent("Tofu Banh Mi Sandwich (v)");
+        expect(getByTestId(`${testId}-cell-row-1-col-name`)).toHaveTextContent("Chicken Caesar Salad");
+        expect(getByTestId(`${testId}-cell-row-2-col-name`)).toHaveTextContent("Cream of Broccoli Soup (v)");
+        expect(getByTestId(`${testId}-cell-row-0-col-station`)).toHaveTextContent("Entree Specials");
+        expect(getByTestId(`${testId}-cell-row-1-col-station`)).toHaveTextContent("Entrees");
+        expect(getByTestId(`${testId}-cell-row-2-col-station`)).toHaveTextContent("Greens & Grains");
 
     });
 
@@ -124,28 +134,29 @@ describe("UCSBDiningCommonsMenuItem tests", () => {
         setupUserOnly();
 
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/ucsbdiningcommons/all").timeout();
+        axiosMock.onGet("/api/UCSBDiningCommonsMenuItem/all").timeout();
 
         const { queryByTestId, getByText } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <DiningCommonsIndexPage />
+                    <DiningCommonsMenuItemIndexPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
 
         await waitFor(() => { expect(axiosMock.history.get.length).toBeGreaterThanOrEqual(3); });
 
-        const expectedHeaders = ['Code',  'Name', 'Sack Meal?','Takeout Meal?','Dining Cam?','Latitude','Longitude'];
+        const expectedHeaders = ['ID',  'Dining Commons Code', 'Dish','Station'];
     
         expectedHeaders.forEach((headerText) => {
           const header = getByText(headerText);
           expect(header).toBeInTheDocument();
         });
 
-        expect(queryByTestId(`${testId}-cell-row-0-col-code`)).not.toBeInTheDocument();
+        expect(queryByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument();
     });
 
+    /*
     test("test what happens when you click delete, admin", async () => {
         setupAdminUser();
 
