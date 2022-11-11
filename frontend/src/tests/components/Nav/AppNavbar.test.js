@@ -348,8 +348,7 @@ describe('AppNavbar tests', () => {
     await waitFor(() =>
       expect(getByTestId(/appnavbar-dining-commons-list/)).toBeInTheDocument()
     )
-  })
-
+    
       test("renders the ucsbdiningcommonmenuitem menu correctly for a user", async () => {
 
         const currentUser = currentUserFixtures.userOnly;
@@ -397,7 +396,6 @@ describe('AppNavbar tests', () => {
         await waitFor( () => expect(getByTestId(/appnavbar-diningcommonsmenuitem-create/)).toBeInTheDocument() );
 
     });
-   
 
 })
 
