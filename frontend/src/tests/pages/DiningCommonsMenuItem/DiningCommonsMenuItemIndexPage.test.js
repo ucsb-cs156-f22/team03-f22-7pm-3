@@ -1,5 +1,5 @@
 // import { fireEvent, render, waitFor } from "@testing-library/react";
-import { render } from "@testing-library/react"
+import { render } from "@testing-library/react"ss
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 import DiningCommonsMenuItemIndexPage from "main/pages/DiningCommonsMenuItem/DiningCommonsMenuItemIndexPage";
@@ -34,7 +34,7 @@ describe("UCSBDiningCommonsMenuItem tests", () => {
 
     const axiosMock =new AxiosMockAdapter(axios);
 
-    const testId = "DiningCommonsMenuItemTable";
+    //const testId = "DiningCommonsMenuItemTable";
 
     const setupUserOnly = () => {
         axiosMock.reset();
