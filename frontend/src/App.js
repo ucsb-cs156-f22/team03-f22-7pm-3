@@ -11,12 +11,19 @@ import DiningCommonsIndexPage from "main/pages/DiningCommons/DiningCommonsIndexP
 import DiningCommonsCreatePage from "main/pages/DiningCommons/DiningCommonsCreatePage";
 import DiningCommonsEditPage from "main/pages/DiningCommons/DiningCommonsEditPage";
 
+import OrganizationIndexPage from "main/pages/UCSBOrganization/UCSBOrganizationIndexPage";
 
 import UCSBDatesIndexPage from "main/pages/UCSBDates/UCSBDatesIndexPage";
 import UCSBDatesCreatePage from "main/pages/UCSBDates/UCSBDatesCreatePage";
 import UCSBDatesEditPage from "main/pages/UCSBDates/UCSBDatesEditPage";
 
 import RecommendationIndexPage from "main/pages/Recommendations/RecommendationsIndexPage";
+import HelpRequsestsIndexPage from "main/pages/HelpRequests/HelpRequestsIndexPage";
+
+/* import RecommendationIndexPage from "main/pages/UCSBDates/UCSBDatesIndexPage"; */
+/* import RecommendationCreatePage from "main/pages/UCSBDates/UCSBDatesCreatePage"; */
+/* import RecommendationEditPage from "main/pages/UCSBDates/UCSBDatesEditPage"; */
+
 
 import MenuItemReviewsIndexPage from "main/pages/MenuItemReviews/MenuItemReviewsIndexPage";
 
@@ -55,6 +62,13 @@ function App() {
           )
         }
         {
+          hasRole(currentUser, "ROLE_USER") && (
+            <>
+              <Route exact path="/UCSBOrganization/list" element={<OrganizationIndexPage />} />
+            </>
+          )
+        }
+        {
           hasRole(currentUser, "ROLE_ADMIN") && (
             <>
               <Route exact path="/diningCommons/create" element={<DiningCommonsCreatePage />} />
@@ -82,6 +96,13 @@ function App() {
           hasRole(currentUser, "ROLE_USER") && (
             <>
               <Route exact path="/recommendations/list" element={<RecommendationIndexPage/>} />
+            </>
+          )
+        }
+        {
+          hasRole(currentUser, "ROLE_USER") && (
+            <>
+              <Route exact path="/helprequests/list" element={<HelpRequsestsIndexPage />} />
             </>
           )
         }
