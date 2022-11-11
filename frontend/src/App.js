@@ -16,9 +16,8 @@ import UCSBDatesIndexPage from "main/pages/UCSBDates/UCSBDatesIndexPage";
 import UCSBDatesCreatePage from "main/pages/UCSBDates/UCSBDatesCreatePage";
 import UCSBDatesEditPage from "main/pages/UCSBDates/UCSBDatesEditPage";
 
-import RecommendationIndexPage from "main/pages/Recommendations/RecommendationsIndexPage";
-/* import RecommendationCreatePage from "main/pages/Recommendations/RecommendationsCreatePage"; */
-/* import RecommendationEditPage from "main/pages/Recommendations/RecommendationsEditPage"; */
+
+import MenuItemReviewsIndexPage from "main/pages/MenuItemReviews/MenuItemReviewsIndexPage";
 
 
 import { hasRole, useCurrentUser } from "main/utils/currentUser";
@@ -85,14 +84,14 @@ function App() {
             </>
           )
         }
-        {/* { */}
-        {/*   hasRole(currentUser, "ROLE_ADMIN") && ( */}
-        {/*     <> */}
-        {/*       <Route exact path="/recommendations/create" element={<RecommendationCreatePage/>} /> */}
-        {/*       <Route exact path="/recommendations/edit/:id" element={<RecommendationEditPage/>} /> */}
-        {/*     </> */}
-        {/*   ) */}
-        {/* } */}
+        {
+          hasRole(currentUser, "ROLE_USER") && (
+            <>
+              <Route exact path="/MenuItemReview/list" element={<MenuItemReviewsIndexPage />} />
+            </>
+          )
+        }
+
       </Routes>
     </BrowserRouter>
   );
