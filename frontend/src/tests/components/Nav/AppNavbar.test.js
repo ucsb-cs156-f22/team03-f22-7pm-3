@@ -349,29 +349,32 @@ describe('AppNavbar tests', () => {
       expect(getByTestId(/appnavbar-dining-commons-list/)).toBeInTheDocument()
     )
     })
-      test("renders the ucsbdiningcommonmenuitem menu correctly for a user", async () => {
 
-        const currentUser = currentUserFixtures.userOnly;
-        const systemInfo = systemInfoFixtures.showingBoth;
 
-        const doLogin = jest.fn();
+  test("renders the ucsbdiningcommonmenuitem menu correctly for a user", async () => {
 
-        const {getByTestId  } = render(
-            <QueryClientProvider client={queryClient}>
-                <MemoryRouter>
-                    <AppNavbar currentUser={currentUser} systemInfo={systemInfo} doLogin={doLogin} />
-                </MemoryRouter>
-            </QueryClientProvider>
-        );
+    const currentUser = currentUserFixtures.userOnly;
+    const systemInfo = systemInfoFixtures.showingBoth;
 
-        await waitFor(() => expect(getByTestId("appnavbar-diningcommonsmenuitem-dropdown")).toBeInTheDocument());
-        const dropdown = getByTestId("appnavbar-diningcommonsmenuitem-dropdown");
-        const aElement = dropdown.querySelector("a");
-        expect(aElement).toBeInTheDocument();
-        aElement?.click();
-        await waitFor( () => expect(getByTestId("appnavbar-diningcommonsmenuitem-list")).toBeInTheDocument() );
+    const doLogin = jest.fn();
 
-    });
+    const {getByTestId  } = render(
+        <QueryClientProvider client={queryClient}>
+            <MemoryRouter>
+                <AppNavbar currentUser={currentUser} systemInfo={systemInfo} doLogin={doLogin} />
+            </MemoryRouter>
+        </QueryClientProvider>
+    );
+
+    await waitFor(() => expect(getByTestId("appnavbar-diningcommonsmenuitem-dropdown")).toBeInTheDocument());
+    const dropdown = getByTestId("appnavbar-diningcommonsmenuitem-dropdown");
+    const aElement = dropdown.querySelector("a");
+    expect(aElement).toBeInTheDocument();
+    aElement?.click();
+    await waitFor( () => expect(getByTestId("appnavbar-diningcommonsmenuitem-list")).toBeInTheDocument() );
+
+});
+
 
     test("renders the ucsbdiningcommonmenuitem menu correctly for an admin", async () => {
 
