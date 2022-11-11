@@ -44,7 +44,7 @@ export default function UCSBOrganizationTable({ UCSBOrganizations, currentUser }
         },
         {
             Header: 'Full Name',
-            id: 'orgTranslation', // needed for tests
+            accessor: 'orgTranslation', // needed for tests
         },
         {
             Header: 'Inactive?',
