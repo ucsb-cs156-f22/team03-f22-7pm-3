@@ -1,4 +1,4 @@
-import { render, waitFor } from "@testing-library/react";
+import { render, _waitFor } from "@testing-library/react";
 import { helpRequestsFixtures } from "fixtures/helpRequestsFixtures";
 import HelpRequestsTable from "main/components/HelpRequests/HelpRequestsTable"
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -69,7 +69,7 @@ describe("HelpRequestsTable tests", () => {
     );
 
     const expectedHeaders = ["id", "RequesterEmail", "TeamId", "TableOrBreakoutRoom", "RequestTime", "Explanation", "Solved"];
-    const expectedFields = ["id", "requesterEmail", "teamId", "tableOrBreakoutRoom", "requestTime", "explanation", "Solved"];
+    const expectedFields = ["id", "requesterEmail", "teamId", "tableOrBreakoutRoom", "requestTime", "explanation", "solved"];
     const testId = "HelpRequestsTable";
 
     expectedHeaders.forEach((headerText) => {
