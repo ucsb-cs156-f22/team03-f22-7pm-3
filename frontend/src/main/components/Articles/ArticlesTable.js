@@ -4,13 +4,15 @@ import { cellToAxiosParamsDelete, onDeleteSuccess } from "main/utils/ArticleUtil
 import { useNavigate } from "react-router-dom";
 import { hasRole } from "main/utils/currentUser";
 
-export default function ArticlesTable({ dates, currentUser }) {
+export default function ArticlesTable({ articles, currentUser }) {
+
+    const testid = "ArticlesTable";
 
     const navigate = useNavigate();
 
-    const editCallback = (cell) => {
-        navigate(`/articles/edit/${cell.row.values.id}`)
-    }
+    // const editCallback = (cell) => {
+    //     navigate(`/articles/edit/${cell.row.values.id}`)
+    // }
 
     // Stryker disable all : hard to test for query caching
     const deleteMutation = useBackendMutation(
@@ -18,7 +20,7 @@ export default function ArticlesTable({ dates, currentUser }) {
         { onSuccess: onDeleteSuccess },
         ["/api/Article/all"]
     );
-    // Stryker enable all 
+    // Stryker enable all
 
     // Stryker disable next-line all : TODO try to make a good test for this
     const deleteCallback = async (cell) => { deleteMutation.mutate(cell); }
@@ -26,7 +28,7 @@ export default function ArticlesTable({ dates, currentUser }) {
     const columns = [
         {
             Header: 'ID',
-            accessor: 'id', // accessor is the "key" in the data
+            accessor: 'id',
         },
         {
             Header: 'Title',
@@ -52,15 +54,15 @@ export default function ArticlesTable({ dates, currentUser }) {
 
     const columnsIfAdmin = [
         ...columns,
-        ButtonColumn("Edit", "primary", editCallback, "ArticlesTable"),
+        // ButtonColumn("Edit", "primary", editCallback, "ArticlesTable"),
         ButtonColumn("Delete", "danger", deleteCallback, "ArticlesTable")
     ];
 
     const columnsToDisplay = hasRole(currentUser, "ROLE_ADMIN") ? columnsIfAdmin : columns;
 
     return <OurTable
-        data={dates}
+        data={articles}
         columns={columnsToDisplay}
-        testid={"ArticlesTable"}
+        testid={testid}
     />;
 };

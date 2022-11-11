@@ -5,6 +5,7 @@ export function onDeleteSuccess(message) {
     toast(message);
 }
 
+// Stryker disable all : TODO reenable when delete is implemented
 export function cellToAxiosParamsDelete(cell) {
     return {
         url: "/api/Article",
@@ -14,4 +15,5 @@ export function cellToAxiosParamsDelete(cell) {
         }
     }
 }
+// Stryker enable all
 

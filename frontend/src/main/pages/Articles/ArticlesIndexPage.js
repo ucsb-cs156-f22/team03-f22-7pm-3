@@ -9,7 +9,7 @@ export default function ArticlesIndexPage() {
 
     const currentUser = useCurrentUser();
 
-    const { data: dates, error: _error, status: _status } =
+    const { data: articles, error: _error, status: _status } =
         useBackend(
             // Stryker disable next-line all : don't test internal caching of React Query
             ["/api/Article/all"],
@@ -22,7 +22,7 @@ export default function ArticlesIndexPage() {
         <BasicLayout>
             <div className="pt-2">
                 <h1>Articles</h1>
-                <ArticlesTable dates={dates} currentUser={currentUser} />
+                <ArticlesTable articles={articles} currentUser={currentUser} />
             </div>
         </BasicLayout>
     )
