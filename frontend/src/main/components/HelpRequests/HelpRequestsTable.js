@@ -1,16 +1,16 @@
-import OurTable, { ButtonColumn } from "main/components/OurTable";
-import { useBackendMutation } from "main/utils/useBackend";
-import { onDeleteSuccess } from "main/utils/UCSBDateUtils";
+import OurTable, { _ButtonColumn } from "main/components/OurTable";
+import { _useBackendMutation } from "main/utils/useBackend";
+import { _onDeleteSuccess } from "main/utils/UCSBDateUtils";
 // import { hasRole } from "main/utils/currentUser";
-import { cellToAxiosParamsDelete } from "main/utils/HelpRequestUtils";
+// import { cellToAxiosParamsDelete } from "main/utils/HelpRequestUtils";
 
-export default function HelpRequestsTable({ requests, currentUser }) {
+export default function HelpRequestsTable({ requests, _currentUser }) {
     // Stryker disable all : hard to test for query caching
-    const deleteMutation = useBackendMutation(
-        cellToAxiosParamsDelete,
-        { onSuccess: onDeleteSuccess },
-        ["/api/HelpRequest/all"]
-    );
+    // const deleteMutation = useBackendMutation(
+    //     cellToAxiosParamsDelete,
+    //     { onSuccess: onDeleteSuccess },
+    //     ["/api/HelpRequest/all"]
+    // );
     // Stryker enable all 
 
     // Stryker disable next-line all : TODO try to make a good test for this
