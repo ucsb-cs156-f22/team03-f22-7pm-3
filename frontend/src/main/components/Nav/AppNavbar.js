@@ -89,7 +89,30 @@ export default function AppNavbar({ currentUser, systemInfo, doLogout, currentUr
                 )
               }
             </Nav>
-
+              {
+                  hasRole(currentUser, "ROLE_USER") && (
+                      <NavDropdown title="Articles" id="appnavbar-articles-dropdown" data-testid="appnavbar-articles-dropdown" >
+                        <NavDropdown.Item as={Link} to="/articles/list" data-testid="appnavbar-articles-list">List Articles</NavDropdown.Item>
+                        {
+                            hasRole(currentUser, "ROLE_ADMIN") && (
+                                <NavDropdown.Item as={Link} to="/articles/create" data-testid="appnavbar-articles-create">Create Article</NavDropdown.Item>
+                            )
+                        }
+                      </NavDropdown>
+                  )
+              }
+			  {
+                hasRole(currentUser, "ROLE_USER") && (
+                  <NavDropdown title="Organizations" id="appnavbar-ucsborganizations-dropdown" data-testid="appnavbar-ucsborganizations-dropdown" >
+                    <NavDropdown.Item as={Link} to="/UCSBOrganization/list" data-testid="appnavbar-ucsborganizations-list">List Organizations</NavDropdown.Item>
+                    {
+                      hasRole(currentUser, "ROLE_ADMIN") && (
+                        <NavDropdown.Item as={Link} to="/UCSBOrganization/create" data-testid="appnavbar-ucsborganizations-create">Create</NavDropdown.Item>
+                      )
+                    }
+                  </NavDropdown>
+                  )
+               }
             <Nav className="ml-auto">
               {/* This `nav` component contains all navigation items that show up on the right side */}
               {
