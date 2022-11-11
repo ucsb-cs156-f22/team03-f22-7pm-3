@@ -1,7 +1,7 @@
 import OurTable, { ButtonColumn } from "main/components/OurTable";
 import { useBackendMutation } from "main/utils/useBackend";
 import { onDeleteSuccess } from "main/utils/UCSBDateUtils";
-import { hasRole } from "main/utils/currentUser";
+// import { hasRole } from "main/utils/currentUser";
 import { cellToAxiosParamsDelete } from "main/utils/HelpRequestUtils";
 
 export default function HelpRequestsTable({ requests, currentUser }) {
@@ -14,7 +14,7 @@ export default function HelpRequestsTable({ requests, currentUser }) {
     // Stryker enable all 
 
     // Stryker disable next-line all : TODO try to make a good test for this
-    const deleteCallback = async (cell) => { deleteMutation.mutate(cell); }
+    // const deleteCallback = async (cell) => { deleteMutation.mutate(cell); }
 
     const columns = [
         {
@@ -48,16 +48,16 @@ export default function HelpRequestsTable({ requests, currentUser }) {
         }
     ];
 
-    const columnsIfAdmin = [
-        ...columns,
-        ButtonColumn("Delete", "danger", deleteCallback, "HelpRequestsTable")
-    ];
+    // const columnsIfAdmin = [
+    //     ...columns,
+    //     ButtonColumn("Delete", "danger", deleteCallback, "HelpRequestsTable")
+    // ];
 
-    const columnsToDisplay = hasRole(currentUser, "ROLE_ADMIN") ? columnsIfAdmin : columns;
+    // const columnsToDisplay = hasRole(currentUser, "ROLE_ADMIN") ? columnsIfAdmin : columns;
 
     return <OurTable
         data={requests}
-        columns={columnsToDisplay}
+        columns={columns}
         testid={"HelpRequestsTable"}
     />;
 };
