@@ -8,7 +8,7 @@ export default function ArticlesTable({ articles, currentUser }) {
 
     const testid = "ArticlesTable";
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     // const editCallback = (cell) => {
     //     navigate(`/articles/edit/${cell.row.values.id}`)
