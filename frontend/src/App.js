@@ -3,6 +3,10 @@ import HomePage from "main/pages/HomePage";
 import ProfilePage from "main/pages/ProfilePage";
 import AdminUsersPage from "main/pages/AdminUsersPage";
 
+import ArticlesIndexPage from "main/pages/Articles/ArticlesIndexPage";
+// import ArticlesCreatePage from "main/pages/Articles/ArticlesCreatePage";
+// import ArticlesEditPage from "main/pages/Articles/ArticlesEditPage";
+
 import TodosIndexPage from "main/pages/Todos/TodosIndexPage";
 import TodosCreatePage from "main/pages/Todos/TodosCreatePage";
 import TodosEditPage from "main/pages/Todos/TodosEditPage";
@@ -47,6 +51,21 @@ function App() {
         {
           hasRole(currentUser, "ROLE_ADMIN") && <Route exact path="/admin/users" element={<AdminUsersPage />} />
         }
+        {
+          hasRole(currentUser, "ROLE_USER") && (
+            <>
+              <Route exact path="/articles/list" element={<ArticlesIndexPage />} />
+            </>
+            )
+        }
+        {/*
+          hasRole(currentUser, "ROLE_ADMIN") && (
+            <>
+              <Route exact path="/articles/create" element={<ArticlesCreatePage />} />
+              <Route exact path="/articles/edit/:id" element={<ArticlesEditPage />} />
+            </>
+          )
+        */}
         {
           hasRole(currentUser, "ROLE_USER") && (
             <>
