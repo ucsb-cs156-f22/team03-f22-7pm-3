@@ -48,12 +48,36 @@ export default function AppNavbar({ currentUser, systemInfo, doLogout, currentUr
                 )
               }
               {
+                  hasRole(currentUser, "ROLE_USER") && (
+                      <NavDropdown title="Articles" id="appnavbar-articles-dropdown" data-testid="appnavbar-articles-dropdown" >
+                        <NavDropdown.Item as={Link} to="/articles/list" data-testid="appnavbar-articles-list">List Articles</NavDropdown.Item>
+                        {
+                            hasRole(currentUser, "ROLE_ADMIN") && (
+                                <NavDropdown.Item as={Link} to="/articles/create" data-testid="appnavbar-articles-create">Create Article</NavDropdown.Item>
+                            )
+                        }
+                      </NavDropdown>
+                  )
+              }
+              {
                 hasRole(currentUser, "ROLE_USER") && (
                   <NavDropdown title="Todos" id="appnavbar-todos-dropdown" data-testid="appnavbar-todos-dropdown" >
                     <NavDropdown.Item as={Link} to="/todos/list">List Todos</NavDropdown.Item>
                     <NavDropdown.Item as={Link} to="/todos/create">Create Todo</NavDropdown.Item>
                   </NavDropdown>
                 )
+              }
+              { // Dining Commons menu item
+                hasRole(currentUser, "ROLE_USER") && (
+                  <NavDropdown title="Dining Commons Menu Item" id="appnavbar-ucsbiningcommonsmenuitem-dropdown" data-testid="appnavbar-diningcommonsmenuitem-dropdown" >
+                    <NavDropdown.Item as={Link} to="/UCSBDiningCommonsMenuItem/list" data-testid="appnavbar-diningcommonsmenuitem-list">List Dining Commons MenuItems</NavDropdown.Item>
+                    {
+                      hasRole(currentUser, "ROLE_ADMIN") && (
+                      <NavDropdown.Item as={Link} to="/UCSBDiningCommonsMenuItem/create" data-testid="appnavbar-diningcommonsmenuitem-create">Create Dining Commons MenuItems</NavDropdown.Item>
+                      )
+                    }
+                  </NavDropdown>
+                ) 
               }
                {
                 hasRole(currentUser, "ROLE_USER") && (
@@ -66,10 +90,10 @@ export default function AppNavbar({ currentUser, systemInfo, doLogout, currentUr
               {
                 hasRole(currentUser, "ROLE_USER") && (
                   <NavDropdown title="Recommendations" id="appnavbar-recommendations-dropdown" data-testid="appnavbar-recommendations-dropdown" >
-                    <NavDropdown.Item as={Link} to="/Recommendations/list" data-testid="appnavbar-recommendations-list">List</NavDropdown.Item>
+                    <NavDropdown.Item as={Link} to="/recommendations/list" data-testid="appnavbar-recommendations-list">List</NavDropdown.Item>
                     {
                       hasRole(currentUser, "ROLE_ADMIN") && (
-                        <NavDropdown.Item as={Link} to="/Recommendations/create" data-testid="appnavbar-recommendations-create">Create</NavDropdown.Item>
+                        <NavDropdown.Item as={Link} to="/recommendations/create" data-testid="appnavbar-recommendations-create">Create</NavDropdown.Item>
                       )
                     }
                   </NavDropdown>
@@ -87,8 +111,51 @@ export default function AppNavbar({ currentUser, systemInfo, doLogout, currentUr
                   </NavDropdown>
                 )
               }
+              {
+                hasRole(currentUser, "ROLE_USER") && (
+                  <NavDropdown title="HelpRequests" id="appnavbar-helprequests-dropdown" data-testid="appnavbar-helprequests-dropdown" >
+                    <NavDropdown.Item as={Link} to="/helprequests/list" data-testid="appnavbar-helprequests-list">List</NavDropdown.Item>
+                    <NavDropdown.Item as={Link} to="/helprequests/create" data-testid="appnavbar-helprequests-create">Create</NavDropdown.Item>
+                  </NavDropdown>
+                )
+              }
             </Nav>
-
+              {
+                  hasRole(currentUser, "ROLE_USER") && (
+                      <NavDropdown title="Articles" id="appnavbar-articles-dropdown" data-testid="appnavbar-articles-dropdown" >
+                        <NavDropdown.Item as={Link} to="/articles/list" data-testid="appnavbar-articles-list">List Articles</NavDropdown.Item>
+                        {
+                            hasRole(currentUser, "ROLE_ADMIN") && (
+                                <NavDropdown.Item as={Link} to="/articles/create" data-testid="appnavbar-articles-create">Create Article</NavDropdown.Item>
+                            )
+                        }
+                      </NavDropdown>
+                  )
+              }
+			  {
+                hasRole(currentUser, "ROLE_USER") && (
+                  <NavDropdown title="Organizations" id="appnavbar-ucsborganizations-dropdown" data-testid="appnavbar-ucsborganizations-dropdown" >
+                    <NavDropdown.Item as={Link} to="/UCSBOrganization/list" data-testid="appnavbar-ucsborganizations-list">List Organizations</NavDropdown.Item>
+                    {
+                      hasRole(currentUser, "ROLE_ADMIN") && (
+                        <NavDropdown.Item as={Link} to="/UCSBOrganization/create" data-testid="appnavbar-ucsborganizations-create">Create</NavDropdown.Item>
+                      )
+                    }
+                  </NavDropdown>
+                  )
+               }
+			   {
+                hasRole(currentUser, "ROLE_USER") && (
+                  <NavDropdown title="MenuItemReview" id="appnavbar-menuitemreviews-dropdown" data-testid="appnavbar-menuitemreviews-dropdown" >
+                    <NavDropdown.Item as={Link} to="/MenuItemReview/list" data-testid="appnavbar-menuitemreviews-list">List MenuItemReviews</NavDropdown.Item>
+                    {
+                      hasRole(currentUser, "ROLE_ADMIN") && (
+                        <NavDropdown.Item as={Link} to="/MenuItemReview/create" data-testid="appnavbar-menuitemreviews-create">Create MenuItemReviews</NavDropdown.Item>
+                      )
+                    }
+                    </NavDropdown>
+                )
+              }
             <Nav className="ml-auto">
               {/* This `nav` component contains all navigation items that show up on the right side */}
               {
