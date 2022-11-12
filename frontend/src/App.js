@@ -24,12 +24,7 @@ import UCSBDatesCreatePage from "main/pages/UCSBDates/UCSBDatesCreatePage";
 import UCSBDatesEditPage from "main/pages/UCSBDates/UCSBDatesEditPage";
 
 import RecommendationIndexPage from "main/pages/Recommendations/RecommendationsIndexPage";
-import HelpRequsestsIndexPage from "main/pages/HelpRequests/HelpRequestsIndexPage";
-
-/* import RecommendationIndexPage from "main/pages/UCSBDates/UCSBDatesIndexPage"; */
-/* import RecommendationCreatePage from "main/pages/UCSBDates/UCSBDatesCreatePage"; */
-/* import RecommendationEditPage from "main/pages/UCSBDates/UCSBDatesEditPage"; */
-
+import HelpRequestsIndexPage from "main/pages/HelpRequests/HelpRequestsIndexPage";
 
 import MenuItemReviewsIndexPage from "main/pages/MenuItemReviews/MenuItemReviewsIndexPage";
 
@@ -130,7 +125,7 @@ function App() {
         {
           hasRole(currentUser, "ROLE_USER") && (
             <>
-              <Route exact path="/helprequests/list" element={<HelpRequsestsIndexPage />} />
+              <Route exact path="/helprequests/list" element={<HelpRequestsIndexPage />} />
             </>
           )
         }
