@@ -145,6 +145,36 @@ describe("UCSBOrganizationIndexPage tests", () => {
         expect(queryByTestId(`${testId}-cell-row-0-col-orgCode`)).not.toBeInTheDocument();
     });
 
+    test("test what happens when you click delete, admin", async () => {
+        setupAdminUser();
+
+        const queryClient = new QueryClient();
+        axiosMock.onGet("/api/UCSBOrganization/all").reply(200, ucsbOrganizationFixtures.threeOrganizations);
+        axiosMock.onDelete("/api/UCSBOrganization", {params: {id: "KRC"}}).reply(200, "UCSBOrganization with id KRC was deleted");
+
+
+        const { getByTestId } = render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <UCSBOrganizationIndexPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+
+        await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-orgCode`)).toBeInTheDocument(); });
+
+       expect(getByTestId(`${testId}-cell-row-0-col-orgCode`)).toHaveTextContent("KRC"); 
+
+
+        const deleteButton = getByTestId(`${testId}-cell-row-0-col-Delete-button`);
+        expect(deleteButton).toBeInTheDocument();
+       
+        fireEvent.click(deleteButton);
+
+        await waitFor(() => { expect(mockToast).toBeCalledWith("UCSBOrganization with id KRC was deleted") });
+
+    });
+
     test("test what happens when you click edit as an admin", async () => {
         setupAdminUser();
 
