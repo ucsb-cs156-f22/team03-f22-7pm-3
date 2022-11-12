@@ -1,6 +1,6 @@
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 
-export default function HelpRequsestsIndexPage() {
+export default function HelpRequestsIndexPage() {
   return (
     <BasicLayout>
       <div className="pt-2">
