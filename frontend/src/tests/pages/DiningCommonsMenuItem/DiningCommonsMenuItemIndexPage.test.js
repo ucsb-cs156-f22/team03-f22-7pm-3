@@ -163,7 +163,7 @@ describe("UCSBDiningCommonsMenuItem tests", () => {
 
         const queryClient = new QueryClient();
         axiosMock.onGet("/api/UCSBDiningCommonsMenuItem/all").reply(200, diningCommonsMenuItemFixtures.threeDiningCommonsMenuItem);
-        axiosMock.onDelete("/api/UCSBDiningCommonsMenuItem", {params: {id: 1}}).reply(200, "DiningCommonsMenuItem with id 2 was deleted");
+        axiosMock.onDelete("/api/UCSBDiningCommonsMenuItem", {params: {id: 1}}).reply(200, "DiningCommonsMenuItem with id 1 deleted");
 
 
         const { getByTestId } = render(
@@ -184,7 +184,7 @@ describe("UCSBDiningCommonsMenuItem tests", () => {
        
         fireEvent.click(deleteButton);
 
-        await waitFor(() => { expect(mockToast).toBeCalledWith("DiningCommonsMenuItem with id 1 was deleted") });
+        await waitFor(() => { expect(mockToast).toBeCalledWith("DiningCommonsMenuItem with id 1 deleted") });
 
     });
 

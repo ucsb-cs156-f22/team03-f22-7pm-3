@@ -34,7 +34,7 @@ describe("DiningCommonsMenuItemTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <DiningCommonsMenuItemTable dates={[]} currentUser={currentUser} />
+          <DiningCommonsMenuItemTable diningCommonsMenuItem={[]} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>
 
@@ -47,7 +47,7 @@ describe("DiningCommonsMenuItemTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <DiningCommonsMenuItemTable dates={[]} currentUser={currentUser} />
+          <DiningCommonsMenuItemTable diningCommonsMenuItem={[]} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>
 
@@ -60,7 +60,7 @@ describe("DiningCommonsMenuItemTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <DiningCommonsMenuItemTable dates={[]} currentUser={currentUser} />
+          <DiningCommonsMenuItemTable diningCommonsMenuItem={[]} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>
 
@@ -74,7 +74,7 @@ describe("DiningCommonsMenuItemTable tests", () => {
     const { getByText, getByTestId } = render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <DiningCommonsMenuItemTable dates={diningCommonsMenuItemFixtures.threeDiningCommonsMenuItem} currentUser={currentUser} />
+          <DiningCommonsMenuItemTable diningCommonsMenuItem={diningCommonsMenuItemFixtures.threeDiningCommonsMenuItem} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>
 
@@ -113,7 +113,7 @@ describe("DiningCommonsMenuItemTable tests", () => {
     const { getByTestId } = render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <DiningCommonsMenuItemTable dates={diningCommonsMenuItemFixtures.threeDiningCommonsMenuItem} currentUser={currentUser} />
+          <DiningCommonsMenuItemTable diningCommonsMenuItem={diningCommonsMenuItemFixtures.threeDiningCommonsMenuItem} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>
 
