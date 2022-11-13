@@ -8,7 +8,7 @@ export default {
     component: DiningCommonsMenuItemEditPage
 };
 
-const Template = () => <UCSBDatesEditPage />;
+const Template = () => <DiningCommonsMenuItemEditPage />;
 
 export const Default = Template.bind({});
 
