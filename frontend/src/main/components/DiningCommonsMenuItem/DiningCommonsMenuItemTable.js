@@ -43,6 +43,7 @@ export default function DiningCommonsMenuItemTable({ diningCommonsMenuItem, curr
         }
     ];
 
+
     const testId = "DiningCommonsMenuItemTable"
 
     const columnsIfAdmin = [
@@ -53,6 +54,7 @@ export default function DiningCommonsMenuItemTable({ diningCommonsMenuItem, curr
 
     const columnsToDisplay = hasRole(currentUser, "ROLE_ADMIN") ? columnsIfAdmin : columns;
     // const columnsToDisplay = columns;
+
 
 
     return <OurTable

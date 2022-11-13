@@ -14,7 +14,6 @@ import AxiosMockAdapter from "axios-mock-adapter";
 import mockConsole from "jest-mock-console";
 
 
-
 const mockToast = jest.fn();
 jest.mock('react-toastify', () => {
     const originalModule = jest.requireActual('react-toastify');
@@ -88,7 +87,6 @@ describe("UCSBDiningCommonsMenuItem tests", () => {
         setupUserOnly();
         const queryClient = new QueryClient();
         axiosMock.onGet("/api/UCSBDiningCommonsMenuItem/all").reply(200, diningCommonsMenuItemFixtures.threeDiningCommonsMenuItem);
-
         const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
@@ -115,7 +113,6 @@ describe("UCSBDiningCommonsMenuItem tests", () => {
                 </MemoryRouter>
             </QueryClientProvider>
         );
-
         await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent(1); });
         expect(getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(2);
         expect(getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent(3);
@@ -136,7 +133,6 @@ describe("UCSBDiningCommonsMenuItem tests", () => {
 
         const queryClient = new QueryClient();
         axiosMock.onGet("/api/UCSBDiningCommonsMenuItem/all").timeout();
-
         const { queryByTestId, getByText } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
@@ -148,11 +144,11 @@ describe("UCSBDiningCommonsMenuItem tests", () => {
         await waitFor(() => { expect(axiosMock.history.get.length).toBeGreaterThanOrEqual(3); });
 
         const expectedHeaders = ['ID',  'Dining Commons Code', 'Dish','Station'];
-    
         expectedHeaders.forEach((headerText) => {
           const header = getByText(headerText);
           expect(header).toBeInTheDocument();
         });
+
 
         expect(queryByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument();
     });
@@ -166,25 +162,23 @@ describe("UCSBDiningCommonsMenuItem tests", () => {
         axiosMock.onDelete("/api/UCSBDiningCommonsMenuItem", {params: {id: 1}}).reply(200, "DiningCommonsMenuItem with id 1 deleted");
 
 
+
         const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
                     <DiningCommonsMenuItemIndexPage />
+
                 </MemoryRouter>
             </QueryClientProvider>
         );
 
         await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toBeInTheDocument(); });
-
         expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent(1); 
-
-
         const deleteButton = getByTestId(`${testId}-cell-row-0-col-Delete-button`);
         expect(deleteButton).toBeInTheDocument();
-       
         fireEvent.click(deleteButton);
-
         await waitFor(() => { expect(mockToast).toBeCalledWith("DiningCommonsMenuItem with id 1 deleted") });
+
 
     });
 
@@ -202,6 +196,7 @@ describe("UCSBDiningCommonsMenuItem tests", () => {
             </QueryClientProvider>
         );
 
+
         await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toBeInTheDocument(); });
 
         expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1"); 
@@ -212,11 +207,13 @@ describe("UCSBDiningCommonsMenuItem tests", () => {
        
         fireEvent.click(editButton);
 
+
         await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith('/UCSBDiningCommonsMenuItem/edit/1'));
 
     });
 
     
+
 });
 
 
