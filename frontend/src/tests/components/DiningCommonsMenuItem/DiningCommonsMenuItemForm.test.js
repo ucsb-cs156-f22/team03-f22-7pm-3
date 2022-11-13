@@ -35,7 +35,7 @@ describe("UCSBDateForm tests", () => {
         );
         await waitFor(() => expect(getByTestId(/DiningCommonsMenuItemForm-name/)).toBeInTheDocument());
         expect(getByText(/Name Of Dish/)).toBeInTheDocument();
-        //expect(getByTestId(/DiningCommonsMenuItemForm-diningCommonsCode/)).toHaveValue("ortega");
+        //cexpect(getByTestId(/DiningCommonsMenuItemForm-diningCommonsCode/)).toHaveValue("ortega");
     });
 
 
