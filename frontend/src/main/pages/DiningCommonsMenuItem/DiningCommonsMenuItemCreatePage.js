@@ -41,7 +41,7 @@ export default function DiningCommonsMenuItemCreatePage() {
   return (
     <BasicLayout>
       <div className="pt-2">
-        <h1>Create New Dining Commons</h1>
+        <h1>Create New Dining Commons Menu Item</h1>
 
         <DiningCommonsMenuItemForm submitAction={onSubmit} />
 

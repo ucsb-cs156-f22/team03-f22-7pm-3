@@ -1,13 +1,23 @@
 import { fireEvent, render, waitFor } from "@testing-library/react";
 import { diningCommonsMenuItemFixtures } from "fixtures/diningCommonsMenuItemFixtures";
-import DiningCommonsMenuItemTable from "main/components/DiningCommonsMenuItem/DiningCommonsMenuItemTable";
+import DiningCommonsMenuItemTable from "main/components/DiningCommonsMenuItem/DiningCommonsMenuItemTable"
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 import { currentUserFixtures } from "fixtures/currentUserFixtures";
 
 
-const mockedNavigate = jest.fn();
+const mockToast = jest.fn();
+jest.mock('react-toastify', () => {
+  const originalModule = jest.requireActual('react-toastify');
+  return{
+    __esModule: true,
+    ...originalModule,
+    toast: (x) => mockToast(x)
+  };
+});
 
+
+const mockedNavigate = jest.fn();
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
     useNavigate: () => mockedNavigate
@@ -23,7 +33,7 @@ describe("DiningCommonsMenuItemTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <DiningCommonsMenuItemTable diningMenuItemCommons={[]} currentUser={currentUser} />
+          <DiningCommonsMenuItemTable dates={[]} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>
 
@@ -36,7 +46,7 @@ describe("DiningCommonsMenuItemTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <DiningCommonsMenuItemTable diningCommons={[]} currentUser={currentUser} />
+          <DiningCommonsMenuItemTable dates={[]} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>
 
@@ -49,29 +59,28 @@ describe("DiningCommonsMenuItemTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <DiningCommonsMenuItemTable diningMenuItemCommons={[]} currentUser={currentUser} />
+          <DiningCommonsMenuItemTable dates={[]} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>
 
     );
   });
 
-  test("Has the expected column headers and content for adminUser", () => {
+  test("Has the expected colum headers and content for adminUser", () => {
 
     const currentUser = currentUserFixtures.adminUser;
 
     const { getByText, getByTestId } = render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <DiningCommonsMenuItemTable diningMenuItemCommons={diningCommonsMenuItemFixtures.threeDiningCommonsMenuItem} currentUser={currentUser} />
+          <DiningCommonsMenuItemTable dates={diningCommonsMenuItemFixtures.threeDiningCommonsMenuItem} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>
 
     );
 
-
-    const expectedHeaders = ['ID',  'Dining Commons Code', 'Dish','Station'];
-    const expectedFields = ['id', 'diningCommonsCode','name', 'station'];
+    const expectedHeaders = ["ID", "Dining Commons Code", "Dish", "Station"];
+    const expectedFields = ["id", "diningCommonsCode", "name", "station"];
     const testId = "DiningCommonsMenuItemTable";
 
     expectedHeaders.forEach((headerText) => {
@@ -84,10 +93,8 @@ describe("DiningCommonsMenuItemTable tests", () => {
       expect(header).toBeInTheDocument();
     });
 
-    expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent(0);
-    expect(getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(1);
-    expect(getByTestId(`${testId}-cell-row-0-col-diningCommonsCode`)).toHaveTextContent("ortega");
-    expect(getByTestId(`${testId}-cell-row-1-col-diningCommonsCode`)).toHaveTextContent("ortega");
+    expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
+    expect(getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("2");
 
     const editButton = getByTestId(`${testId}-cell-row-0-col-Edit-button`);
     expect(editButton).toBeInTheDocument();
@@ -106,16 +113,15 @@ describe("DiningCommonsMenuItemTable tests", () => {
     const { getByTestId } = render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <DiningCommonsMenuItemTable diningCommonsMenuItem={diningCommonsMenuItemFixtures.threeDiningCommonsMenuItem} currentUser={currentUser} />
+          <DiningCommonsMenuItemTable dates={diningCommonsMenuItemFixtures.threeDiningCommonsMenuItem} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>
 
     );
-    const testId = "DiningCommonsMenuItemTable";
 
-    await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent(1); });
+    await waitFor(() => { expect(getByTestId(`DiningCommonsMenuItemTable-cell-row-0-col-id`)).toHaveTextContent("1"); });
 
-    const editButton = getByTestId(`${testId}-cell-row-0-col-Edit-button`);
+    const editButton = getByTestId(`DiningCommonsMenuItemTable-cell-row-0-col-Edit-button`);
     expect(editButton).toBeInTheDocument();
     
     fireEvent.click(editButton);
@@ -123,7 +129,6 @@ describe("DiningCommonsMenuItemTable tests", () => {
     await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith('/UCSBDiningCommonsMenuItem/edit/1'));
 
   });
-
 
 });
 

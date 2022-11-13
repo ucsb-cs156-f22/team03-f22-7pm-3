@@ -1,5 +1,4 @@
-import OurTable, { ButtonColumn} from "main/components/OurTable";
-// import OurTable from "main/components/OurTable"
+import OurTable, { ButtonColumn } from "main/components/OurTable";
 import { useBackendMutation } from "main/utils/useBackend";
 import {  onDeleteSuccess } from "main/utils/UCSBDateUtils"
 import { useNavigate } from "react-router-dom";
@@ -59,12 +58,11 @@ export default function DiningCommonsMenuItemTable({ diningCommonsMenuItem, curr
         }
     ];
 
-    const testid = "DiningCommonsMenuItemTable";
 
     const columnsIfAdmin = [
         ...columns,
-        ButtonColumn("Edit", "primary", editCallback, testid),
-        ButtonColumn("Delete", "danger", deleteCallback, testid)
+        ButtonColumn("Edit", "primary", editCallback, "DiningCommonsMenuItemTable"),
+        ButtonColumn("Delete", "danger", deleteCallback, "DiningCommonsMenuItemTable")
     ];
 
     const columnsToDisplay = hasRole(currentUser, "ROLE_ADMIN") ? columnsIfAdmin : columns;
@@ -74,6 +72,6 @@ export default function DiningCommonsMenuItemTable({ diningCommonsMenuItem, curr
     return <OurTable
         data={diningCommonsMenuItem}
         columns={columnsToDisplay}
-        testid={testid}
+        testid={"DiningCommonsMenuItemTable"}
     />;
 };

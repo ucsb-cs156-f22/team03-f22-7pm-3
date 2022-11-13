@@ -30,7 +30,9 @@ function DiningCommonsMenuItemForm({ initialCommonsMenuItem, submitAction, butto
                     <Form.Control
                         data-testid="DiningCommonsMenuItemForm-id"
                         id="id"
-                        type="text"
+                        type="number"
+                        step="1"
+                        precision={0}
                         {...register("id")}
                         value={initialCommonsMenuItem.id}
                         disabled
