@@ -7,7 +7,9 @@ import TodosIndexPage from "main/pages/Todos/TodosIndexPage";
 import TodosCreatePage from "main/pages/Todos/TodosCreatePage";
 import TodosEditPage from "main/pages/Todos/TodosEditPage";
 
-import DiningCommonsMenuItemPage from "main/pages/DiningCommonsMenuItem/DiningCommonsMenuItemIndexPage"
+import DiningCommonsMenuItemIndexPage from "main/pages/DiningCommonsMenuItem/DiningCommonsMenuItemIndexPage"
+import DiningCommonsMenuItemCreatePage from "main/pages/DiningCommonsMenuItem/DiningCommonsMenuItemCreatePage"
+import DiningCommonsMenuItemEditPage from "main/pages/DiningCommonsMenuItem/DiningCommonsMenuItemEditPage"
 
 import DiningCommonsIndexPage from "main/pages/DiningCommons/DiningCommonsIndexPage";
 import DiningCommonsCreatePage from "main/pages/DiningCommons/DiningCommonsCreatePage";
@@ -53,7 +55,15 @@ function App() {
         { // UCSB Dining Commons Menu  Item
           hasRole(currentUser, "ROLE_USER") && (
             <>
-              <Route exact path="/UCSBDiningCommonsMenuItem/list" element={<DiningCommonsMenuItemPage />} />
+              <Route exact path="/UCSBDiningCommonsMenuItem/list" element={<DiningCommonsMenuItemIndexPage />} />
+            </>
+          )
+        }
+        {
+          hasRole(currentUser, "ROLE_ADMIN") && (
+            <>
+              <Route exact path="/UCSBDiningCommonsMenuItem/create" element={<DiningCommonsMenuItemCreatePage />} />
+              <Route exact path="/UCSBDiningCommonsMenuItem/edit/:id" element={<DiningCommonsMenuItemEditPage />} />
             </>
           )
         }

@@ -58,6 +58,7 @@ function UCSBDateForm({ initialUCSBDate, submitAction, buttonLabel="Create" }) {
                 </Form.Control.Feedback>
             </Form.Group>
 
+
             <Form.Group className="mb-3" >
                 <Form.Label htmlFor="name">Name</Form.Label>
                 <Form.Control
