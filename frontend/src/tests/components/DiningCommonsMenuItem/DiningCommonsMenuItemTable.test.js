@@ -23,6 +23,7 @@ jest.mock('react-router-dom', () => ({
     useNavigate: () => mockedNavigate
 }));
 
+
 describe("DiningCommonsMenuItemTable tests", () => {
   const queryClient = new QueryClient();
 
@@ -100,16 +101,15 @@ describe("DiningCommonsMenuItemTable tests", () => {
     expect(editButton).toBeInTheDocument();
     expect(editButton).toHaveClass("btn-primary");
 
-    const deleteButton = getByTestId(`${testId}-cell-row-0-col-Delete-button`);
-    expect(deleteButton).toBeInTheDocument();
-    expect(deleteButton).toHaveClass("btn-danger");
+    // const deleteButton = getByTestId(`${testId}-cell-row-0-col-Delete-button`);
+    // expect(deleteButton).toBeInTheDocument();
+    // expect(deleteButton).toHaveClass("btn-danger");
 
   });
 
   test("Edit button navigates to the edit page for admin user", async () => {
 
     const currentUser = currentUserFixtures.adminUser;
-
     const { getByTestId } = render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>

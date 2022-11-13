@@ -1,4 +1,4 @@
-import { _fireEvent, render, waitFor } from "@testing-library/react";
+import { fireEvent, render, waitFor } from "@testing-library/react";
 // import { render } from "@testing-library/react"
 // import {render, waitFore} from "@testing-library/react"
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -11,7 +11,8 @@ import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 import { diningCommonsMenuItemFixtures } from "fixtures/diningCommonsMenuItemFixtures";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
-import _mockConsole from "jest-mock-console";
+import mockConsole from "jest-mock-console";
+
 
 
 const mockToast = jest.fn();
@@ -33,7 +34,7 @@ jest.mock('react-router-dom', () => ({
 
 describe("UCSBDiningCommonsMenuItem tests", () => {
 
-    const axiosMock =new AxiosMockAdapter(axios);
+    const axiosMock = new AxiosMockAdapter(axios);
 
     const testId = "DiningCommonsMenuItemTable";
 
@@ -156,26 +157,26 @@ describe("UCSBDiningCommonsMenuItem tests", () => {
         expect(queryByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument();
     });
 
-    /*
+    
     test("test what happens when you click delete, admin", async () => {
         setupAdminUser();
 
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/ucsbdiningcommons/all").reply(200, diningCommonsFixtures.threeCommons);
-        axiosMock.onDelete("/api/ucsbdiningcommons", {params: {code: "de-la-guerra"}}).reply(200, "DiningCommons with id de-la-guerra was deleted");
+        axiosMock.onGet("/api/UCSBDiningCommonsMenuItem/all").reply(200, diningCommonsMenuItemFixtures.threeDiningCommonsMenuItem);
+        axiosMock.onDelete("/api/UCSBDiningCommonsMenuItem", {params: {id: 1}}).reply(200, "DiningCommonsMenuItem with id 2 was deleted");
 
 
         const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <DiningCommonsIndexPage />
+                    <DiningCommonsMenuItemIndexPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
 
-        await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-code`)).toBeInTheDocument(); });
+        await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toBeInTheDocument(); });
 
-       expect(getByTestId(`${testId}-cell-row-0-col-code`)).toHaveTextContent("de-la-guerra"); 
+        expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent(1); 
 
 
         const deleteButton = getByTestId(`${testId}-cell-row-0-col-Delete-button`);
@@ -183,7 +184,7 @@ describe("UCSBDiningCommonsMenuItem tests", () => {
        
         fireEvent.click(deleteButton);
 
-        await waitFor(() => { expect(mockToast).toBeCalledWith("DiningCommons with id de-la-guerra was deleted") });
+        await waitFor(() => { expect(mockToast).toBeCalledWith("DiningCommonsMenuItem with id 1 was deleted") });
 
     });
 
@@ -191,19 +192,19 @@ describe("UCSBDiningCommonsMenuItem tests", () => {
         setupAdminUser();
 
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/ucsbdiningcommons/all").reply(200, diningCommonsFixtures.threeCommons);
+        axiosMock.onGet("/api/UCSBDiningCommonsMenuItem/all").reply(200, diningCommonsMenuItemFixtures.threeDiningCommonsMenuItem);
 
         const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <DiningCommonsIndexPage />
+                    <DiningCommonsMenuItemIndexPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
 
-        await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-code`)).toBeInTheDocument(); });
+        await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toBeInTheDocument(); });
 
-        expect(getByTestId(`${testId}-cell-row-0-col-code`)).toHaveTextContent("de-la-guerra"); 
+        expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1"); 
 
 
         const editButton = getByTestId(`${testId}-cell-row-0-col-Edit-button`);
@@ -211,11 +212,11 @@ describe("UCSBDiningCommonsMenuItem tests", () => {
        
         fireEvent.click(editButton);
 
-        await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith('/diningCommons/edit/de-la-guerra'));
+        await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith('/UCSBDiningCommonsMenuItem/edit/1'));
 
     });
 
-    */
+    
 });
 
 

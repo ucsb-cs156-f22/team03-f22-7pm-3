@@ -14,16 +14,9 @@ export function cellToAxiosParamsDelete(cell) {
     }
 }
 
-// {
-//   "diningCommonsCode": "string",
-//   "id": 0,
-//   "name": "string",
-//   "station": "string"
-// }
 export default function DiningCommonsMenuItemTable({ diningCommonsMenuItem, currentUser }) {
 
     const navigate = useNavigate();
-
     const editCallback = (cell) => {
         navigate(`/UCSBDiningCommonsMenuItem/edit/${cell.row.values.id}`)
     }
@@ -58,11 +51,12 @@ export default function DiningCommonsMenuItemTable({ diningCommonsMenuItem, curr
         }
     ];
 
+    const testId = "DiningCommonsMenuItemTable"
 
     const columnsIfAdmin = [
         ...columns,
-        ButtonColumn("Edit", "primary", editCallback, "DiningCommonsMenuItemTable"),
-        ButtonColumn("Delete", "danger", deleteCallback, "DiningCommonsMenuItemTable")
+        ButtonColumn("Edit", "primary", editCallback, testId),
+        ButtonColumn("Delete", "danger", deleteCallback, testId)
     ];
 
     const columnsToDisplay = hasRole(currentUser, "ROLE_ADMIN") ? columnsIfAdmin : columns;
@@ -72,6 +66,6 @@ export default function DiningCommonsMenuItemTable({ diningCommonsMenuItem, curr
     return <OurTable
         data={diningCommonsMenuItem}
         columns={columnsToDisplay}
-        testid={"DiningCommonsMenuItemTable"}
+        testid={testId}
     />;
 };
