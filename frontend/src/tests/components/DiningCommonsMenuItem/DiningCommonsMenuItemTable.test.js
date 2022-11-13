@@ -111,6 +111,7 @@ describe("DiningCommonsMenuItemTable tests", () => {
       </QueryClientProvider>
 
     );
+    const testId = "DiningCommonsMenuItemTable";
 
     await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent(1); });
 
