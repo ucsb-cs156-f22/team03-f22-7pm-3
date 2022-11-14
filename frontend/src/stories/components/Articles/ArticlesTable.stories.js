@@ -2,7 +2,6 @@ import React from 'react';
 
 import ArticlesTable from "main/components/Articles/ArticlesTable";
 import { articlesFixtures } from 'fixtures/articlesFixtures';
-import {diningCommonsFixtures} from "../../../fixtures/diningCommonsFixtures";
 import {currentUserFixtures} from "../../../fixtures/currentUserFixtures";
 
 export default {
