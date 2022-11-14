@@ -20,7 +20,7 @@ export default function MenuItemReviewsIndexPage() {
 
   return (
     <BasicLayout>
-      <div className="pt-3">
+      <div className="pt-2">
         <h1>MenuItemReviews</h1>
         <MenuItemReviewsTable menuItemReviews={reviews} currentUser={currentUser} />
       </div>
