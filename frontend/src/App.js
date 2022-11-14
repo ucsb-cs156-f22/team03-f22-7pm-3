@@ -3,20 +3,31 @@ import HomePage from "main/pages/HomePage";
 import ProfilePage from "main/pages/ProfilePage";
 import AdminUsersPage from "main/pages/AdminUsersPage";
 
+import ArticlesIndexPage from "main/pages/Articles/ArticlesIndexPage";
+// import ArticlesCreatePage from "main/pages/Articles/ArticlesCreatePage";
+// import ArticlesEditPage from "main/pages/Articles/ArticlesEditPage";
+
 import TodosIndexPage from "main/pages/Todos/TodosIndexPage";
 import TodosCreatePage from "main/pages/Todos/TodosCreatePage";
 import TodosEditPage from "main/pages/Todos/TodosEditPage";
+
+
+import DiningCommonsMenuItemIndexPage from "main/pages/DiningCommonsMenuItem/DiningCommonsMenuItemIndexPage"
+import DiningCommonsMenuItemCreatePage from "main/pages/DiningCommonsMenuItem/DiningCommonsMenuItemCreatePage"
+import DiningCommonsMenuItemEditPage from "main/pages/DiningCommonsMenuItem/DiningCommonsMenuItemEditPage"
 
 import DiningCommonsIndexPage from "main/pages/DiningCommons/DiningCommonsIndexPage";
 import DiningCommonsCreatePage from "main/pages/DiningCommons/DiningCommonsCreatePage";
 import DiningCommonsEditPage from "main/pages/DiningCommons/DiningCommonsEditPage";
 
+import OrganizationIndexPage from "main/pages/UCSBOrganization/UCSBOrganizationIndexPage";
 
 import UCSBDatesIndexPage from "main/pages/UCSBDates/UCSBDatesIndexPage";
 import UCSBDatesCreatePage from "main/pages/UCSBDates/UCSBDatesCreatePage";
 import UCSBDatesEditPage from "main/pages/UCSBDates/UCSBDatesEditPage";
 
 import RecommendationIndexPage from "main/pages/Recommendations/RecommendationsIndexPage";
+import HelpRequestsIndexPage from "main/pages/HelpRequests/HelpRequestsIndexPage";
 
 import MenuItemReviewsIndexPage from "main/pages/MenuItemReviews/MenuItemReviewsIndexPage";
 
@@ -41,9 +52,39 @@ function App() {
         {
           hasRole(currentUser, "ROLE_USER") && (
             <>
+              <Route exact path="/articles/list" element={<ArticlesIndexPage />} />
+            </>
+            )
+        }
+        {/*
+          hasRole(currentUser, "ROLE_ADMIN") && (
+            <>
+              <Route exact path="/articles/create" element={<ArticlesCreatePage />} />
+              <Route exact path="/articles/edit/:id" element={<ArticlesEditPage />} />
+            </>
+          )
+        */}
+        {
+          hasRole(currentUser, "ROLE_USER") && (
+            <>
               <Route exact path="/todos/list" element={<TodosIndexPage />} />
               <Route exact path="/todos/create" element={<TodosCreatePage />} />
               <Route exact path="/todos/edit/:todoId" element={<TodosEditPage />} />
+            </>
+          )
+        }
+        { // UCSB Dining Commons Menu  Item
+          hasRole(currentUser, "ROLE_USER") && (
+            <>
+              <Route exact path="/UCSBDiningCommonsMenuItem/list" element={<DiningCommonsMenuItemIndexPage />} />
+            </>
+          )
+        }
+        {
+          hasRole(currentUser, "ROLE_ADMIN") && (
+            <>
+              <Route exact path="/UCSBDiningCommonsMenuItem/create" element={<DiningCommonsMenuItemCreatePage />} />
+              <Route exact path="/UCSBDiningCommonsMenuItem/edit/:id" element={<DiningCommonsMenuItemEditPage />} />
             </>
           )
         }
@@ -51,6 +92,13 @@ function App() {
           hasRole(currentUser, "ROLE_USER") && (
             <>
               <Route exact path="/diningCommons/list" element={<DiningCommonsIndexPage />} />
+            </>
+          )
+        }
+        {
+          hasRole(currentUser, "ROLE_USER") && (
+            <>
+              <Route exact path="/UCSBOrganization/list" element={<OrganizationIndexPage />} />
             </>
           )
         }
@@ -82,6 +130,13 @@ function App() {
           hasRole(currentUser, "ROLE_USER") && (
             <>
               <Route exact path="/recommendations/list" element={<RecommendationIndexPage/>} />
+            </>
+          )
+        }
+        {
+          hasRole(currentUser, "ROLE_USER") && (
+            <>
+              <Route exact path="/helprequests/list" element={<HelpRequestsIndexPage />} />
             </>
           )
         }

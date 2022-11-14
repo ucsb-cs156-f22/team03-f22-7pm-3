@@ -1,14 +1,14 @@
-// import { fireEvent, render, waitFor } from "@testing-library/react";
-import { render, waitFor } from "@testing-library/react";
+import { fireEvent, render, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
-import MenuItemReviewsIndexPage from "main/pages/MenuItemReviews/MenuItemReviewsIndexPage";
+import HelpRequestsIndexPage from "main/pages/HelpRequests/HelpRequestsIndexPage";
+
 
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
+import { helpRequestsFixtures } from "fixtures/helpRequestsFixtures";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
-import { menuItemReviewsFixtures } from "fixtures/menuItemReviewsFixtures";
 import mockConsole from "jest-mock-console";
 
 
@@ -22,11 +22,11 @@ jest.mock('react-toastify', () => {
     };
 });
 
-describe("MenuItemReviewsIndexPage tests", () => {
+describe("HelpRequestsIndexPage tests", () => {
 
     const axiosMock =new AxiosMockAdapter(axios);
 
-    const testId = "MenuItemReviewsTable";
+    const testId = "HelpRequestsTable";
 
     const setupUserOnly = () => {
         axiosMock.reset();
@@ -45,12 +45,12 @@ describe("MenuItemReviewsIndexPage tests", () => {
     test("renders without crashing for regular user", () => {
         setupUserOnly();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/MenuItemReview/all").reply(200, []);
+        axiosMock.onGet("/api/HelpRequest/all").reply(200, []);
 
         render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <MenuItemReviewsIndexPage />
+                    <HelpRequestsIndexPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
@@ -61,12 +61,12 @@ describe("MenuItemReviewsIndexPage tests", () => {
     test("renders without crashing for admin user", () => {
         setupAdminUser();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/MenuItemReview/all").reply(200, []);
+        axiosMock.onGet("/api/HelpRequest/all").reply(200, []);
 
         render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <MenuItemReviewsIndexPage />
+                    <HelpRequestsIndexPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
@@ -74,41 +74,41 @@ describe("MenuItemReviewsIndexPage tests", () => {
 
     });
 
-    test("renders three reviews without crashing for regular user", async () => {
+    test("renders three requests without crashing for regular user", async () => {
         setupUserOnly();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/MenuItemReview/all").reply(200, menuItemReviewsFixtures.threeReviews);
+        axiosMock.onGet("/api/HelpRequest/all").reply(200, helpRequestsFixtures.threeRequests);
 
         const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <MenuItemReviewsIndexPage />
+                    <HelpRequestsIndexPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
 
-        await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-itemId`)).toHaveTextContent("1"); });
-        expect(getByTestId(`${testId}-cell-row-1-col-itemId`)).toHaveTextContent("2");
-        expect(getByTestId(`${testId}-cell-row-2-col-itemId`)).toHaveTextContent("3");
+        await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1"); });
+        expect(getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("2");
+        expect(getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent("3");
 
     });
 
-    test("renders three reviews without crashing for admin user", async () => {
+    test("renders three requests without crashing for admin user", async () => {
         setupAdminUser();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/MenuItemReview/all").reply(200, menuItemReviewsFixtures.threeReviews);
+        axiosMock.onGet("/api/HelpRequest/all").reply(200, helpRequestsFixtures.threeRequests);
 
         const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <MenuItemReviewsIndexPage />
+                    <HelpRequestsIndexPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
 
-        await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-itemId`)).toHaveTextContent("1"); });
-        expect(getByTestId(`${testId}-cell-row-1-col-itemId`)).toHaveTextContent("2");
-        expect(getByTestId(`${testId}-cell-row-2-col-itemId`)).toHaveTextContent("3");
+        await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1"); });
+        expect(getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("2");
+        expect(getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent("3");
 
     });
 
@@ -116,14 +116,14 @@ describe("MenuItemReviewsIndexPage tests", () => {
         setupUserOnly();
 
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/MenuItemReview/all").timeout();
+        axiosMock.onGet("/api/HelpRequest/all").timeout();
 
         const restoreConsole = mockConsole();
 
         const { queryByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <MenuItemReviewsIndexPage />
+                    <HelpRequestsIndexPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
@@ -131,38 +131,39 @@ describe("MenuItemReviewsIndexPage tests", () => {
         await waitFor(() => { expect(axiosMock.history.get.length).toBeGreaterThanOrEqual(1); });
         restoreConsole();
 
-        expect(queryByTestId(`${testId}-cell-row-0-col-itemId`)).not.toBeInTheDocument();
+        expect(queryByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument();
     });
 
-    // test("test what happens when you click delete, admin", async () => {
-    //     setupAdminUser();
+    test("test what happens when you click delete, admin", async () => {
+        setupAdminUser();
 
-    //     const queryClient = new QueryClient();
-    //     axiosMock.onGet("/api/MenuItemReview/all").reply(200, menuItemReviewsFixtures.threeReviews);
-    //     axiosMock.onDelete("/api/MenuItemReview").reply(200, "MenuItemReview with id 1 deleted");
-
-
-    //     const { getByTestId } = render(
-    //         <QueryClientProvider client={queryClient}>
-    //             <MemoryRouter>
-    //                 <MenuItemReviewsIndexPage />
-    //             </MemoryRouter>
-    //         </QueryClientProvider>
-    //     );
-
-    //     await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-itemId`)).toBeInTheDocument(); });
-
-    //    expect(getByTestId(`${testId}-cell-row-0-col-itemId`)).toHaveTextContent("1"); 
+        const queryClient = new QueryClient();
+        axiosMock.onGet("/api/HelpRequest/all").reply(200, helpRequestsFixtures.threeRequests);
+        axiosMock.onDelete("/api/HelpRequest").reply(200, "HelpRequest with id 1 deleted");
 
 
-    //     const deleteButton = getByTestId(`${testId}-cell-row-0-col-Delete-button`);
-    //     expect(deleteButton).toBeInTheDocument();
+        const { getByTestId } = render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <HelpRequestsIndexPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+
+        await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toBeInTheDocument(); });
+
+       expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1"); 
+
+
+        const deleteButton = getByTestId(`${testId}-cell-row-0-col-Delete-button`);
+        expect(deleteButton).toBeInTheDocument();
        
-    //     fireEvent.click(deleteButton);
+        fireEvent.click(deleteButton);
 
-    //     await waitFor(() => { expect(mockToast).toBeCalledWith("MenuItemReview with id 1 deleted") });
+        await waitFor(() => { expect(mockToast).toBeCalledWith("HelpRequest with id 1 deleted") });
 
-    // });
+    });
+
 
 });
 
