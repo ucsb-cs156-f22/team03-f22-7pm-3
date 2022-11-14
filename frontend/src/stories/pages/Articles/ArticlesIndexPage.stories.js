@@ -1,14 +1,14 @@
 
 import React from 'react';
 
-import UCSBDatesIndexPage from "main/pages/UCSBDates/UCSBDatesIndexPage";
+import ArticlesIndexPage from "main/pages/Articles/ArticlesIndexPage";
 
 export default {
-    title: 'pages/UCSBDates/UCSBDatesIndexPage',
-    component: UCSBDatesIndexPage
+    title: 'pages/Articles/ArticlesIndexPage',
+    component: ArticlesIndexPage
 };
 
-const Template = () => <UCSBDatesIndexPage />;
+const Template = () => <ArticlesIndexPage />;
 
 export const Default = Template.bind({});
 
