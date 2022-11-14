@@ -167,7 +167,7 @@ public class UCSBDiningCommonsMenuItemControllerTests extends ControllerTestCase
                 // arrange
 
                 UCSBDiningCommonsMenuItem ortega = UCSBDiningCommonsMenuItem.builder()
-                                .id(10)
+                //                .id(10)
                                 .diningCommonsCode("ortega")
                                 .name("Baked Pesto Pasta with Chicken")
                                 .station("Entree Specials")
@@ -177,7 +177,7 @@ public class UCSBDiningCommonsMenuItemControllerTests extends ControllerTestCase
 
                 // act
                 MvcResult response = mockMvc.perform(
-                                post("/api/UCSBDiningCommonsMenuItem/post?diningCommonsCode=ortega&id=10&name=Baked Pesto Pasta with Chicken&station=Entree Specials")
+                                post("/api/UCSBDiningCommonsMenuItem/post?diningCommonsCode=ortega&name=Baked Pesto Pasta with Chicken&station=Entree Specials")
                                                 .with(csrf()))
                                 .andExpect(status().isOk()).andReturn();
 
