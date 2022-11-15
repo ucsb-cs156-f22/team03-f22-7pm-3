@@ -203,6 +203,34 @@ describe("RecommendationsIndexPage tests", () => {
 
     });
 
+    test("test what happens when you click edit as an admin", async () => {
+        setupAdminUser();
+
+        const queryClient = new QueryClient();
+        axiosMock.onGet("/api/Recommendation/all").reply(200, recommendationsFixtures.threeRecommendations);
+
+        const { getByTestId } = render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <RecommendationsIndexPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+
+        await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toBeInTheDocument(); });
+
+        expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent(1); 
+
+
+        const editButton = getByTestId(`${testId}-cell-row-0-col-Edit-button`);
+        expect(editButton).toBeInTheDocument();
+       
+        fireEvent.click(editButton);
+
+        await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith('/Recommendation/edit/1'));
+
+    });
+
 });
 
 
