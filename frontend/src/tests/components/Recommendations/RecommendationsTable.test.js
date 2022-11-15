@@ -1,19 +1,27 @@
-import {  render } from "@testing-library/react";
+import { fireEvent, render, waitFor } from "@testing-library/react";
 import { recommendationsFixtures } from "fixtures/recommendationsFixtures";
 import RecommendationTable from "main/components/Recommendations/RecommendationsTable";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 import { currentUserFixtures } from "fixtures/currentUserFixtures";
 
+const mockToast = jest.fn();
+jest.mock('react-toastify', () => {
+    const originalModule = jest.requireActual('react-toastify');
+    return {
+        __esModule: true,
+        ...originalModule,
+        toast: (x) => mockToast(x)
+    };
+});
 
 const mockedNavigate = jest.fn();
-
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
     useNavigate: () => mockedNavigate
 }));
 
-describe("RecommendationsTable tests", () => {
+describe("RecommendationTable tests", () => {
   const queryClient = new QueryClient();
 
 
@@ -48,14 +56,14 @@ describe("RecommendationsTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <RecommendationTable recommendations={[]} currentUser={currentUser} />
+        <RecommendationTable recommendations={[]} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>
 
     );
   });
 
-  test("Has the expected column headers and content for adminUser", () => {
+  test("Has the expected colum headers and content for adminUser", () => {
 
     const currentUser = currentUserFixtures.adminUser;
 
@@ -68,10 +76,9 @@ describe("RecommendationsTable tests", () => {
 
     );
 
-
-    const expectedHeaders = ['Id',  'Requester Email', 'Professor Email','Explanation','Date Requested','Date Needed','Done?'];
-    const expectedFields = ['id', 'requesterEmail','professorEmail', 'explanation','dateRequested','dateNeeded','done'];
-    const testId = "RecommendationsTable";
+    const expectedHeaders = ["Id", "Requester Email", "Professor Email", "Explanation", "Date Requested", "Date Needed", "Done?"];
+    const expectedFields = ["id", "requesterEmail", "professorEmail", "explanation", "dateRequested", "dateNeeded", "done"];
+    const testId = "RecommendationTable";
 
     expectedHeaders.forEach((headerText) => {
       const header = getByText(headerText);
@@ -85,42 +92,43 @@ describe("RecommendationsTable tests", () => {
 
     expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent(1);
     expect(getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(2);
+
     expect(getByTestId(`${testId}-cell-row-0-col-requesterEmail`)).toHaveTextContent("ilikeburritos@gmail.com");
     expect(getByTestId(`${testId}-cell-row-1-col-requesterEmail`)).toHaveTextContent("ilikesushi@gmail.com");
 
-    // const editButton = getByTestId(`${testId}-cell-row-0-col-Edit-button`);
-    // expect(editButton).toBeInTheDocument();
-    // expect(editButton).toHaveClass("btn-primary");
-
+    const editButton = getByTestId(`${testId}-cell-row-0-col-Edit-button`);
+    expect(editButton).toBeInTheDocument();
+    expect(editButton).toHaveClass("btn-primary");
+    /**/
     /* const deleteButton = getByTestId(`${testId}-cell-row-0-col-Delete-button`); */
     /* expect(deleteButton).toBeInTheDocument(); */
     /* expect(deleteButton).toHaveClass("btn-danger"); */
 
   });
 
-  // test("Edit button navigates to the edit page for admin user", async () => {
+  test("Edit button navigates to the edit page for admin user", async () => {
 
-  //   const currentUser = currentUserFixtures.adminUser;
+    const currentUser = currentUserFixtures.adminUser;
 
-  //   const { getByTestId } = render(
-  //     <QueryClientProvider client={queryClient}>
-  //       <MemoryRouter>
-  //         <UCSBDatesTable diningCommons={ucsbDatesFixtures.threeDates} currentUser={currentUser} />
-  //       </MemoryRouter>
-  //     </QueryClientProvider>
+    const { getByTestId } = render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+            <RecommendationTable recommendations={recommendationsFixtures.threeRecommendations} currentUser={currentUser} />
+        </MemoryRouter>
+      </QueryClientProvider>
 
-  //   );
+    );
 
-  //   await waitFor(() => { expect(getByTestId(`UCSBDatesTable-cell-row-0-col-id`)).toHaveTextContent("1"); });
+    await waitFor(() => { expect(getByTestId(`RecommendationTable-cell-row-0-col-id`)).toHaveTextContent(1); });
 
-  //   const editButton = getByTestId(`UCSBDatesTable-cell-row-0-col-Edit-button`);
-  //   expect(editButton).toBeInTheDocument();
+    const editButton = getByTestId(`RecommendationTable-cell-row-0-col-Edit-button`);
+    expect(editButton).toBeInTheDocument();
     
-  //   fireEvent.click(editButton);
+    fireEvent.click(editButton);
 
-  //   await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith('/ucsbdates/edit/1'));
+    await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith('/Recommendation/edit/1'));
 
-  // });
+  });
 
 
 });

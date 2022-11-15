@@ -1,5 +1,4 @@
-/* import { fireEvent, render, waitFor } from "@testing-library/react"; */
-import { render } from "@testing-library/react";
+import { fireEvent, render, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 import RecommendationsIndexPage from "main/pages/Recommendations/RecommendationsIndexPage";
@@ -7,28 +6,35 @@ import RecommendationsIndexPage from "main/pages/Recommendations/Recommendations
 
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
-/* import { ucsbDatesFixtures } from "fixtures/ucsbDatesFixtures"; */
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
-/* import mockConsole from "jest-mock-console"; */
+import _mockConsole from "jest-mock-console";
+import { recommendationsFixtures } from "fixtures/recommendationsFixtures";
 
 
-/* const mockToast = jest.fn(); */
-/* jest.mock('react-toastify', () => { */
-/*     const originalModule = jest.requireActual('react-toastify'); */
-/*     return { */
-/*         __esModule: true, */
-/*         ...originalModule, */
-/*         toast: (x) => mockToast(x) */
-/*     }; */
-/* }); */
+const mockToast = jest.fn();
+jest.mock('react-toastify', () => {
+    const originalModule = jest.requireActual('react-toastify');
+    return {
+        __esModule: true,
+        ...originalModule,
+        toast: (x) => mockToast(x)
+    };
+});
+
+const mockedNavigate = jest.fn(); 
+
+jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'),
+    useNavigate: () => mockedNavigate
+}));
 
 describe("RecommendationsIndexPage tests", () => {
 
     const axiosMock =new AxiosMockAdapter(axios);
 
-    /* const testId = "UCSBDatesTable"; */
-    /**/
+    const testId = "RecommendationTable";
+
     const setupUserOnly = () => {
         axiosMock.reset();
         axiosMock.resetHistory();
@@ -46,7 +52,7 @@ describe("RecommendationsIndexPage tests", () => {
     test("renders without crashing for regular user", () => {
         setupUserOnly();
         const queryClient = new QueryClient();
-        /* axiosMock.onGet("/api/ucsbdates/all").reply(200, []); */
+        axiosMock.onGet("/api/Recommendation/all").reply(200, []);
 
         render(
             <QueryClientProvider client={queryClient}>
@@ -62,7 +68,7 @@ describe("RecommendationsIndexPage tests", () => {
     test("renders without crashing for admin user", () => {
         setupAdminUser();
         const queryClient = new QueryClient();
-        /* axiosMock.onGet("/api/ucsbdates/all").reply(200, []); */
+        axiosMock.onGet("/api/Recommendation/all").reply(200, []);
 
         render(
             <QueryClientProvider client={queryClient}>
@@ -75,85 +81,89 @@ describe("RecommendationsIndexPage tests", () => {
 
     });
 
-    /* test("renders three dates without crashing for regular user", async () => { */
-    /*     setupUserOnly(); */
-    /*     const queryClient = new QueryClient(); */
-    /*     axiosMock.onGet("/api/ucsbdates/all").reply(200, ucsbDatesFixtures.threeDates); */
-    /**/
-    /*     const { getByTestId } = render( */
-    /*         <QueryClientProvider client={queryClient}> */
-    /*             <MemoryRouter> */
-    /*                 <UCSBDatesIndexPage /> */
-    /*             </MemoryRouter> */
-    /*         </QueryClientProvider> */
-    /*     ); */
-    /**/
-    /*     await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1"); }); */
-    /*     expect(getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("2"); */
-    /*     expect(getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent("3"); */
-    /**/
-    /* }); */
+    test("renders three recommendations without crashing for regular user", async () => {
+        setupUserOnly();
+        const queryClient = new QueryClient();
+        axiosMock.onGet("/api/Recommendation/all").reply(200, recommendationsFixtures.threeRecommendations);
 
-    /* test("renders three dates without crashing for admin user", async () => { */
-    /*     setupAdminUser(); */
-    /*     const queryClient = new QueryClient(); */
-    /*     axiosMock.onGet("/api/ucsbdates/all").reply(200, ucsbDatesFixtures.threeDates); */
-    /**/
-    /*     const { getByTestId } = render( */
-    /*         <QueryClientProvider client={queryClient}> */
-    /*             <MemoryRouter> */
-    /*                 <UCSBDatesIndexPage /> */
-    /*             </MemoryRouter> */
-    /*         </QueryClientProvider> */
-    /*     ); */
-    /**/
-    /*     await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1"); }); */
-    /*     expect(getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("2"); */
-    /*     expect(getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent("3"); */
-    /**/
-    /* }); */
-    /**/
-    /* test("renders empty table when backend unavailable, user only", async () => { */
-    /*     setupUserOnly(); */
-    /**/
-    /*     const queryClient = new QueryClient(); */
-    /*     axiosMock.onGet("/api/ucsbdates/all").timeout(); */
-    /**/
-    /*     const restoreConsole = mockConsole(); */
-    /**/
-    /*     const { queryByTestId } = render( */
-    /*         <QueryClientProvider client={queryClient}> */
-    /*             <MemoryRouter> */
-    /*                 <UCSBDatesIndexPage /> */
-    /*             </MemoryRouter> */
-    /*         </QueryClientProvider> */
-    /*     ); */
-    /**/
-    /*     await waitFor(() => { expect(axiosMock.history.get.length).toBeGreaterThanOrEqual(1); }); */
-    /*     restoreConsole(); */
-    /**/
-    /*     expect(queryByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument(); */
-    /* }); */
+        const { getByTestId } = render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <RecommendationsIndexPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+
+        await waitFor(  () => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent(1); } );
+        expect(getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(2);
+        expect(getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent(3);
+
+    });
+
+    test("renders three recommendations without crashing for admin user", async () => {
+        setupAdminUser();
+        const queryClient = new QueryClient();
+        axiosMock.onGet("/api/Recommendation/all").reply(200, recommendationsFixtures.threeRecommendations);
+
+        const { getByTestId } = render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <RecommendationsIndexPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+
+        await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent(1); });
+        expect(getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(2);
+        expect(getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent(3);
+
+    });
+
+    test("renders empty table when backend unavailable, user only", async () => {
+        setupUserOnly();
+
+        const queryClient = new QueryClient();
+        axiosMock.onGet("/api/Recommendation/all").timeout();
+
+        const { queryByTestId, getByText } = render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <RecommendationsIndexPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+
+        await waitFor(() => { expect(axiosMock.history.get.length).toBeGreaterThanOrEqual(3); });
+
+        const expectedHeaders = ['Id', 'Requester Email', 'Professor Email', 'Explanation', 'Date Requested', 'Date Needed', 'Done?' ];
+    
+        expectedHeaders.forEach((headerText) => {
+          const header = getByText(headerText);
+          expect(header).toBeInTheDocument();
+        });
+
+        expect(queryByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument();
+    });
 
     /* test("test what happens when you click delete, admin", async () => { */
     /*     setupAdminUser(); */
     /**/
     /*     const queryClient = new QueryClient(); */
-    /*     axiosMock.onGet("/api/ucsbdates/all").reply(200, ucsbDatesFixtures.threeDates); */
-    /*     axiosMock.onDelete("/api/ucsbdates").reply(200, "UCSBDate with id 1 was deleted"); */
+    /*     axiosMock.onGet("/api/UCSBOrganization/all").reply(200, ucsbOrganizationFixtures.threeOrganizations); */
+    /*     axiosMock.onDelete("/api/UCSBOrganization", {params: {id: "KRC"}}).reply(200, "UCSBOrganization with id KRC was deleted"); */
     /**/
     /**/
     /*     const { getByTestId } = render( */
     /*         <QueryClientProvider client={queryClient}> */
     /*             <MemoryRouter> */
-    /*                 <UCSBDatesIndexPage /> */
+    /*                 <UCSBOrganizationIndexPage /> */
     /*             </MemoryRouter> */
     /*         </QueryClientProvider> */
     /*     ); */
     /**/
-    /*     await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toBeInTheDocument(); }); */
+    /*     await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-orgCode`)).toBeInTheDocument(); }); */
     /**/
-    /*    expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");  */
+    /*    expect(getByTestId(`${testId}-cell-row-0-col-orgCode`)).toHaveTextContent("KRC");  */
     /**/
     /**/
     /*     const deleteButton = getByTestId(`${testId}-cell-row-0-col-Delete-button`); */
@@ -161,9 +171,37 @@ describe("RecommendationsIndexPage tests", () => {
     /*     */
     /*     fireEvent.click(deleteButton); */
     /**/
-    /*     await waitFor(() => { expect(mockToast).toBeCalledWith("UCSBDate with id 1 was deleted") }); */
+    /*     await waitFor(() => { expect(mockToast).toBeCalledWith("UCSBOrganization with id KRC was deleted") }); */
     /**/
     /* }); */
+
+    test("test what happens when you click edit as an admin", async () => {
+        setupAdminUser();
+
+        const queryClient = new QueryClient();
+        axiosMock.onGet("/api/Recommendation/all").reply(200, recommendationsFixtures.threeRecommendations);
+
+        const { getByTestId } = render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <RecommendationsIndexPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+
+        await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toBeInTheDocument(); });
+
+        expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent(1); 
+
+
+        const editButton = getByTestId(`${testId}-cell-row-0-col-Edit-button`);
+        expect(editButton).toBeInTheDocument();
+       
+        fireEvent.click(editButton);
+
+        await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith('/Recommendation/edit/1'));
+
+    });
 
 });
 
